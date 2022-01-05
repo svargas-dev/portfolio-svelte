@@ -1,0 +1,84 @@
+:root {
+  --font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
+  --font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
+  --color-white: #f0eeed;
+  --color-black: #0f1112;
+  --color-gray: #0f11123d;
+  --color-green: #b7d6c5;
+  --color-orange: #f08c68;
+  --color-purple: #884271;
+}
+
+html * {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+/* Fluid typography */
+h1 {
+  font-size: clamp(2em, 0.5em + 3vw, 3.25em);
+}
+
+h2 {
+  font-size: clamp(1.25em, 0.5em + 2vw, 1.75em);
+}
+
+p,
+button,
+label {
+  font-size: clamp(0.9em, 0.25em + 1.75vw, 1.2em);
+  border-radius: 0.125em;
+}
+
+label {
+  font-weight: 500;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#svelte {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.bg-white {
+  background-color: var(--color-white);
+}
+
+.bg-black {
+  background-color: var(--color-black);
+}
+
+.bg-gray {
+  background-color: var(--color-gray);
+}
