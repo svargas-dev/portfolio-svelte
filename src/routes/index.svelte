@@ -6,10 +6,8 @@
 
   let wrapperEl: HTMLDivElement;
   let showLogoEl = false;
-  let formData = {};
-  let result = '';
 
-  function shouldShowLogo(): void {
+  function shouldShowBackToTop(): void {
     if (typeof wrapperEl === 'undefined') return;
 
     if (Math.round(wrapperEl.scrollTop) >= window.innerHeight) {
@@ -25,6 +23,18 @@
     wrapperEl.scrollTo(0, 0);
   }
 
+  let formData = {};
+  enum FormStatus {
+    Pending = '',
+    Sending = 'Sending ...',
+    Sent = 'Form sent',
+    Error = 'There was an error sending the form. Please try again'
+  }
+  let result = FormStatus.Pending;
+
+  /**
+   * Svelte's TS defs are still lacking unfortunately
+   */
   function handleChange(e: any): void {
     formData = { ...formData, [e.target.name]: e.target.value };
   }
@@ -33,19 +43,19 @@
    * Svelte's TS defs are still lacking unfortunately
    */
   function handleSubmit(event: any): void {
-    console.log({ event, formData });
+    result = FormStatus.Sending;
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({ 'form-name': event.target.name, ...formData })
     })
-      .then(() => (result = 'Form sent'))
-      .catch(() => (result = 'There was an error sending the form. Please try again'));
+      .then(() => (result = FormStatus.Sent))
+      .catch(() => (result = FormStatus.Error));
   }
 </script>
 
 <div class="wrapper-bg">
-  <div bind:this={wrapperEl} class="wrapper-content" dir="ltr" on:scroll={shouldShowLogo}>
+  <div bind:this={wrapperEl} class="wrapper-content" dir="ltr" on:scroll={shouldShowBackToTop}>
     <section id="home">
       <div class="headline">
         <h1>Sam Vargas</h1>
@@ -120,7 +130,10 @@
             />
           </label>
 
-          <button type="submit">Send</button>
+          <button
+            type="submit"
+            disabled={result === FormStatus.Sending || result === FormStatus.Sent}>Send</button
+          >
         </form>
         <p class="result">{result}</p>
       </div>
@@ -241,6 +254,12 @@
 
   .contact form button:hover {
     box-shadow: 0 0 0.25em 0.2em var(--color-gray);
+  }
+
+  .contact form button:disabled {
+    cursor: not-allowed;
+    opacity: 0.666;
+    box-shadow: none;
   }
 
   .about,

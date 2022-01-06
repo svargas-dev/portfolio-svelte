@@ -78,7 +78,3 @@ button:hover {
 .bg-black {
   background-color: var(--color-black);
 }
-
-.bg-gray {
-  background-color: var(--color-gray);
-}
