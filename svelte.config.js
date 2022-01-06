@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-netlify';
+import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,13 +8,16 @@ const config = {
   preprocess: preprocess(),
 
   kit: {
-    adapter: adapter({ split: false }),
+    adapter: adapter(),
+    prerender: {
+      crawl: true,
+      enabled: true,
+      entries: ['*'],
+      onError: 'continue'
+    },
 
     // hydrate the <div id="svelte"> element in src/app.html
-    target: '#svelte',
-
-    // we don't need this
-    router: false
+    target: '#svelte'
   }
 };
 

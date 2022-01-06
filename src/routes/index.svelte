@@ -1,10 +1,13 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
+  import { encode } from '$lib/utils/encode';
 
   export const prerender = true;
 
   let wrapperEl: HTMLDivElement;
   let showLogoEl = false;
+  let formData = {};
+  let result = '';
 
   function shouldShowLogo(): void {
     if (typeof wrapperEl === 'undefined') return;
@@ -21,11 +24,25 @@
 
     wrapperEl.scrollTo(0, 0);
   }
-</script>
 
-{#if showLogoEl}
-  <button class="scroll-to-top" on:click={scrollToTop} transition:fade>Back to top </button>
-{/if}
+  function handleChange(e: any): void {
+    formData = { ...formData, [e.target.name]: e.target.value };
+  }
+
+  /**
+   * Svelte's TS defs are still lacking unfortunately
+   */
+  function handleSubmit(event: any): void {
+    console.log({ event, formData });
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({ 'form-name': event.target.name, ...formData })
+    })
+      .then(() => (result = 'Form sent'))
+      .catch(() => (result = 'There was an error sending the form. Please try again'));
+  }
+</script>
 
 <div class="wrapper-bg">
   <div bind:this={wrapperEl} class="wrapper-content" dir="ltr" on:scroll={shouldShowLogo}>
@@ -64,25 +81,55 @@
     <section id="contact">
       <div class="contact">
         <h2>Contact</h2>
-        <form name="contact" method="POST" data-netlify="true">
-          <label for="form-name">
+        <form
+          name="contact"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          on:submit|preventDefault={handleSubmit}
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <label for="contact-name">
             Name<br />
-            <input id="form-name" type="text" required />
+            <input
+              id="contact-name"
+              name="contact-name"
+              type="text"
+              required
+              on:change={handleChange}
+            />
           </label>
-          <label for="form-email">
+          <label for="contact-email">
             Email<br />
-            <input id="form-email" type="email" required />
+            <input
+              id="contact-email"
+              name="contact-email"
+              type="email"
+              required
+              on:change={handleChange}
+            />
           </label>
-          <label for="form-message">
+          <label for="contact-message">
             Message<br />
-            <textarea id="form-message" rows="7" maxlength="512" required />
+            <textarea
+              id="contact-message"
+              name="contact-message"
+              rows="7"
+              maxlength="512"
+              required
+              on:change={handleChange}
+            />
           </label>
 
           <button type="submit">Send</button>
         </form>
+        <p class="result">{result}</p>
       </div>
     </section>
   </div>
+
+  {#if showLogoEl}
+    <button class="scroll-to-top" on:click={scrollToTop} transition:fade>Back to top </button>
+  {/if}
 </div>
 
 <style>
@@ -200,6 +247,10 @@
   .contact {
     position: relative;
     top: 12.5%;
+  }
+
+  .result {
+    text-align: center;
   }
 
   /* Mobile + tablet */

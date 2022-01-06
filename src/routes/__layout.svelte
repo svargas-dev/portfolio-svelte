@@ -3,8 +3,8 @@
   import '@fontsource/ibm-plex-sans/latin-500.css';
   import '@fontsource/ibm-plex-sans/latin-600.css';
   import '@fontsource/ibm-plex-serif/latin-700.css';
-  import Menu from '$lib/Menu/index.svelte';
-  import Footer from '$lib/Footer/index.svelte';
+  import Menu from '$lib/components/Menu/index.svelte';
+  import Footer from '$lib/components/Footer/index.svelte';
   import 'normalize.css';
   import '../app.css';
 </script>
