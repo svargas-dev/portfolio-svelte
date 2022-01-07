@@ -302,7 +302,7 @@
   /* Mobile */
   @media (max-width: 480px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 55vw no-repeat url('/sam-vargas-480.png')
+      background: fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-480.webp')
         var(--color-white);
     }
   }
@@ -310,7 +310,7 @@
   /* Tablets */
   @media (min-width: 481px) and (max-width: 1024px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 55vw no-repeat url('/sam-vargas-900.png')
+      background: fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-900.webp')
         var(--color-white);
     }
 
@@ -324,7 +324,7 @@
   /* Desktop */
   @media (min-width: 1025px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 100vh no-repeat url('/sam-vargas-1200.png')
+      background: fixed left bottom / auto 100vh no-repeat url('/image/sam-vargas-1200.webp')
         var(--color-white);
     }
 
