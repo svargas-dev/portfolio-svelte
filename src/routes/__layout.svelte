@@ -23,7 +23,7 @@
 
 <main>
   <Menu {isOpen} {toggleOpen} {hideMenu} />
-  <!-- TypeScript defs for HTMLDivElement need to be updated for inert tag -->
+  <!-- TypeScript defs need to be updated for inert tag -->
   <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert -->
   <div aria-hidden={isOpen} inert={isOpen}>
     <slot />

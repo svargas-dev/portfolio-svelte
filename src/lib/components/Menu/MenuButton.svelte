@@ -98,6 +98,9 @@
     bottom: 0;
   }
 
+  /* TODO This isn't a good idea as it causes layout recalculations 👀
+  * Probably better to set all initially in this position then transform translate
+  */
   .menu-button:hover .menu-dot,
   .menu-dot--close {
     top: 0;
@@ -107,12 +110,12 @@
   }
 
   .menu-dot-1--close {
-    width: 2.5em;
+    width: 2.5em; /* 👀 */
     transform: rotate(45deg);
   }
 
   .menu-dot-4--close {
-    width: 2.5em;
+    width: 2.5em; /* 👀 */
     transform: rotate(-45deg);
   }
 </style>

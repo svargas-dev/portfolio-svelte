@@ -2,12 +2,11 @@
   import MenuButton from './MenuButton.svelte';
   import { trapFocus } from '$lib/utils/trapFocus';
 
-  let navWrapperEl: HTMLElement;
   export let isOpen = false;
   export let toggleOpen: () => void;
   export let hideMenu: () => void;
 
-  $: navClass = isOpen ? 'nav--open' : '';
+  let navWrapperEl: HTMLElement;
 
   function handleKeydown(e: KeyboardEvent): void {
     if (e.key === 'Escape' || e.keyCode === 27) hideMenu();
@@ -18,6 +17,8 @@
     if (navWrapperEl && isOpen) trapFocusCleanup = trapFocus(navWrapperEl);
     if (!isOpen && trapFocusCleanup) trapFocusCleanup();
   }
+
+  $: navClass = isOpen ? 'nav--open' : '';
 </script>
 
 <!-- TypeScript defs for HTMLDivElement need to be updated for inert tag -->

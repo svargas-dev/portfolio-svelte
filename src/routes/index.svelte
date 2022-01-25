@@ -11,6 +11,7 @@
   function shouldShowBackToTop(): void {
     if (typeof wrapperEl === 'undefined') return;
 
+    // below the fold?
     if (Math.round(wrapperEl.scrollTop) >= window.innerHeight) {
       showLogoEl = true;
     } else if (showLogoEl === true) {
@@ -41,8 +42,8 @@
   /**
    * Svelte's TS defs are still lacking unfortunately
    */
-  function handleChange(e): void {
-    formData = { ...formData, [e.target.name]: e.target.value };
+  function handleChange(event): void {
+    formData = { ...formData, [event.target.name]: event.target.value };
   }
 
   /**

@@ -5,6 +5,10 @@
  * Quick modernization of
  * https://hiddedevries.nl/en/blog/2017-01-29-using-javascript-to-trap-focus-in-an-element
  * https://medium.com/@im_rahul/focus-trapping-looping-b3ee658e5177
+ *
+ * @remarks on a larger producation app you may want to optionally record
+ * the focused element before opening e.g. for use with a modal
+ * then restore when closing
  */
 export function trapFocus(element: HTMLElement): () => void | undefined {
   if (typeof document === 'undefined') return;
