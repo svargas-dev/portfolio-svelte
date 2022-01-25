@@ -9,11 +9,25 @@
   import '@fontsource/ibm-plex-serif/latin-700.css';
   import 'normalize.css';
   import '../app.css';
+
+  let isOpen = false;
+
+  function toggleOpen(): void {
+    isOpen = !isOpen;
+  }
+
+  function hideMenu(): void {
+    isOpen = false;
+  }
 </script>
 
 <main>
-  <Menu />
-  <slot />
+  <Menu {isOpen} {toggleOpen} {hideMenu} />
+  <!-- TypeScript defs for HTMLDivElement need to be updated for inert tag -->
+  <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert -->
+  <div aria-hidden={isOpen} inert={isOpen}>
+    <slot />
+  </div>
   <Footer />
 </main>
 

@@ -34,7 +34,6 @@
   </a>
 
   <a
- 
     href="https://www.linkedin.com/in/sam-vargas-38588bb5"
     target="_blank"
     rel="noopener noreferrer"

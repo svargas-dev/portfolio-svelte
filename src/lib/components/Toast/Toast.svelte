@@ -30,7 +30,12 @@
     toasterEl.children.length && motionOK ? flipToast(toast) : toasterEl.prepend(toast);
   };
 
-  // https://aerotwist.com/blog/flip-your-animations/
+  /**
+   * I could, of course, have used Svelte animations inside
+   * conditional statements but wanted to play with the FLIP concept
+   *
+   * https://aerotwist.com/blog/flip-your-animations/
+   */
   const flipToast = (toast: HTMLOutputElement): void => {
     if (!toasterEl) return;
 
@@ -55,7 +60,7 @@
       }
     );
 
-    // ensures animations starts immediately instead of waiting for next frame on Firefox
+    // ensures animations start immediately on Firefox instead of waiting for next frame
     animation.startTime = document.timeline.currentTime;
   };
 
@@ -78,8 +83,8 @@
 
   $: {
     toasts.forEach((toast) => {
-      Toast(toast);
       toastStore.update((toasts) => toasts.filter((t) => t !== toast));
+      Toast(toast);
     });
   }
 </script>

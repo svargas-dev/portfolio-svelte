@@ -3,24 +3,30 @@
   import { trapFocus } from '$lib/utils/trapFocus';
 
   let navWrapperEl: HTMLElement;
-  let isOpen = false;
+  export let isOpen = false;
+  export let toggleOpen: () => void;
+  export let hideMenu: () => void;
+
   $: navClass = isOpen ? 'nav--open' : '';
 
-  function toggleOpen(): void {
-    isOpen = !isOpen;
-    console.log({ navWrapperEl });
-    if (navWrapperEl && isOpen) trapFocus(navWrapperEl);
+  function handleKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Escape' || e.keyCode === 27) hideMenu();
   }
 
-  function handleKeydown(e: KeyboardEvent): void {
-    if (e.key === 'Escape' || e.keyCode === 27) isOpen = false;
+  let trapFocusCleanup: () => void;
+  $: {
+    if (navWrapperEl && isOpen) trapFocusCleanup = trapFocus(navWrapperEl);
+    if (!isOpen && trapFocusCleanup) trapFocusCleanup();
   }
 </script>
 
-<aside bind:this={navWrapperEl} on:click={toggleOpen} on:keydown={handleKeydown}>
+<!-- TypeScript defs for HTMLDivElement need to be updated for inert tag -->
+<!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert -->
+<aside bind:this={navWrapperEl} on:click={toggleOpen} on:keydown={handleKeydown} inert={!isOpen}>
   <MenuButton {isOpen} />
 
   <nav class={navClass} aria-hidden={!isOpen}>
+    <!-- tabindex required for backwards compatibility -->
     <a href="#about" tabindex={isOpen ? 0 : -1}>About</a>
     <a href="#contact" tabindex={isOpen ? 0 : -1}> Contact</a>
   </nav>

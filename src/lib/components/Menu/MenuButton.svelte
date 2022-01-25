@@ -1,4 +1,7 @@
 <script lang="ts">
+  /**
+   * A good candidate for SVG animation instead here
+   */
   export let isOpen: boolean;
 
   $: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';

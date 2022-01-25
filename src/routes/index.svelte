@@ -1,7 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
   import { encode } from '$lib/utils/encode';
-  // import Toast from '$lib/toast/toast';
   import { toastStore } from '$lib/stores/toastStore';
 
   export const prerender = true;
@@ -42,7 +41,7 @@
   /**
    * Svelte's TS defs are still lacking unfortunately
    */
-  function handleChange(e: any): void {
+  function handleChange(e): void {
     formData = { ...formData, [e.target.name]: e.target.value };
   }
 
@@ -50,7 +49,7 @@
    * Submit netlify form
    * Svelte's TS defs are still lacking unfortunately
    */
-  function handleSubmit(event: any): void {
+  function handleSubmit(event): void {
     result = FormStatus.Sending;
     fetch('/', {
       method: 'POST',
@@ -62,6 +61,7 @@
   }
 </script>
 
+<!-- need a wrapper for the background because of the mask on the content -->
 <div class="wrapper-bg">
   <div bind:this={wrapperEl} class="wrapper-content" dir="ltr" on:scroll={shouldShowBackToTop}>
     <section id="home">
@@ -104,6 +104,7 @@
           netlify-honeypot="bot-field"
           on:submit|preventDefault={handleSubmit}
         >
+          <!-- Could add validation on blur in the future -->
           <input type="hidden" name="form-name" value="contact" />
           <label for="contact-name">
             Name<br />
@@ -257,13 +258,13 @@
   .headline h1 {
     width: max-content;
     border-top: 0.25em solid var(--color-green);
-    padding: 0.85rem 0;
+    padding-block: 0.85rem;
   }
 
   .headline h2 {
     width: 66.666%;
     border-bottom: 0.25em solid var(--color-purple);
-    padding: 1rem 0;
+    padding-block: 1rem;
   }
 
   .contact form {
@@ -289,7 +290,8 @@
 
   .contact form button {
     width: max-content;
-    padding: 0.25em 0.5em;
+    padding-block: 0.25em;
+    padding-inline: 0.5em;
     border: none;
     border-radius: 0.125em;
     background-color: var(--color-black);
@@ -334,7 +336,7 @@
     .contact {
       grid-column: 2 / 6;
       grid-row: 1 / 4;
-      padding: 2em 0;
+      padding-block: 2em;
     }
   }
 
@@ -363,7 +365,7 @@
     .about,
     .contact {
       grid-column: 2 / 6;
-      padding: 3em 0;
+      padding-block: 3em;
     }
   }
 
