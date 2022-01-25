@@ -1,6 +1,8 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
   import { encode } from '$lib/utils/encode';
+  // import Toast from '$lib/toast/toast';
+  import { toastStore } from '$lib/stores/toastStore';
 
   export const prerender = true;
 
@@ -25,12 +27,17 @@
 
   let formData = {};
   enum FormStatus {
-    Pending = '',
+    Initial = '',
     Sending = 'Sending ...',
     Sent = 'Form sent',
     Error = 'There was an error sending the form. Please try again'
   }
-  let result = FormStatus.Pending;
+  let result = FormStatus.Initial;
+  $: {
+    if (result) {
+      toastStore.update((toasts) => toasts.concat(result));
+    }
+  }
 
   /**
    * Svelte's TS defs are still lacking unfortunately
@@ -40,6 +47,7 @@
   }
 
   /**
+   * Submit netlify form
    * Svelte's TS defs are still lacking unfortunately
    */
   function handleSubmit(event: any): void {
@@ -67,19 +75,18 @@
       <div class="about">
         <h2>About</h2>
         <p>
-          A maker and creative problem solver dedicated to creating impactful, accessibile and
-          performant solutions. With over 2 years commercial experience in startups, I've
-          skyrocketed performace, accessibility and SEO.
+          I am a maker and creative problem solver dedicated to creating impactful, accessible and
+          performant solutions.
         </p>
         <p>
-          After nearly a decade working at sea as an officer on board merchant ships, eventually
-          specialising in Antarctic oceanographic vessels, I decided it was time for a new
-          challenge. From books, video courses and friends I began my learning journey and in 2019
-          graduated fron Ironhack Lisbon after an intensive bootcamp focused on today's tech and
-          best practices.
+          After nearly a decade working at sea as an officer on board merchant ships, specialising
+          in polar oceanographic research, I began a new journey into web and software engineering.
+          From books, video courses and friends I dived into the depths and in 2019 graduated from
+          Ironhack Lisbon after an intensive bootcamp focused on today's tech and best practices.
+          Fast forward to today, I have skyrocketed start-ups’ performance, SEO and accessibility.
         </p>
         <p class="this-site">
-          Checkout the <a
+          Interested? Check out the <a
             href="https://github.com/svargas-dev"
             target="_blank"
             rel="noopener noreferrer">source</a
@@ -135,7 +142,6 @@
             disabled={result === FormStatus.Sending || result === FormStatus.Sent}>Send</button
           >
         </form>
-        <p class="result">{result}</p>
       </div>
     </section>
   </div>
@@ -146,6 +152,49 @@
 </div>
 
 <style>
+  a {
+    text-decoration: none;
+    padding-inline: 0.1ch;
+    padding-block: 0.25ch;
+    position: relative;
+    color: var(--color-black);
+  }
+
+  a:focus {
+    outline: 0.2em dashed var(--color-black);
+  }
+
+  a::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-block-end: 0.2em solid var(--color-orange);
+    transition: border 300ms ease-in-out;
+  }
+
+  a:active::before,
+  a:focus::before {
+    border-block-end: 0.4em solid var(--color-orange-alpha);
+  }
+
+  a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: border 150ms ease-in-out;
+  }
+
+  a:hover::after {
+    border-block-end: 0.75em solid var(--color-orange-alpha);
+  }
+
   .scroll-to-top {
     width: max-content;
     height: 2em;
@@ -159,6 +208,7 @@
 
   .scroll-to-top:focus {
     filter: invert(1);
+    outline: none;
   }
 
   .wrapper-content {
@@ -268,10 +318,6 @@
     top: 12.5%;
   }
 
-  .result {
-    text-align: center;
-  }
-
   /* Mobile + tablet */
   @media (max-width: 1024px) {
     .scroll-to-top {
@@ -302,16 +348,16 @@
   /* Mobile */
   @media (max-width: 480px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-480.webp')
-        var(--color-white);
+      background: linear-gradient(var(--color-orange) 0.5vw, transparent 0.5vw),
+        fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-480.webp') var(--color-white);
     }
   }
 
   /* Tablets */
   @media (min-width: 481px) and (max-width: 1024px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-900.webp')
-        var(--color-white);
+      background: linear-gradient(var(--color-orange) 0.5vw, transparent 0.5vw),
+        fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-900.webp') var(--color-white);
     }
 
     .about,
@@ -324,8 +370,9 @@
   /* Desktop */
   @media (min-width: 1025px) {
     .wrapper-bg {
-      background: fixed left bottom / auto 100vh no-repeat url('/image/sam-vargas-1200.webp')
-        var(--color-white);
+      background: linear-gradient(to right, var(--color-orange) 0.5vw, transparent 0.5vw),
+        fixed left bottom / auto 100vh no-repeat url('/image/sam-vargas-1200.webp')
+          var(--color-white);
     }
 
     .scroll-to-top {

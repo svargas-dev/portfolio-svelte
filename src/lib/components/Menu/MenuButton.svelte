@@ -1,10 +1,8 @@
 <script lang="ts">
   export let isOpen: boolean;
-  export let toggleOpen: () => void;
-  export let handleKeydown: (e: KeyboardEvent) => void;
 
-  $: buttonClass = isOpen ? 'menu-button bg-black' : 'menu-button';
-  $: buttonTextClass = isOpen ? 'menu-button__text sr-only' : 'menu-button__text';
+  $: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';
+  $: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
   $: buttonText = isOpen ? 'CLOSE' : 'MENU';
   $: menuDot1Class = isOpen ? 'menu-dot menu-dot--close menu-dot-1--close' : 'menu-dot menu-dot-1';
   $: menuDot2Class = isOpen ? 'menu-dot menu-dot--close' : 'menu-dot menu-dot-2';
@@ -12,7 +10,7 @@
   $: menuDot4Class = isOpen ? 'menu-dot menu-dot--close menu-dot-4--close' : 'menu-dot menu-dot-4';
 </script>
 
-<button class={buttonClass} on:click={toggleOpen} on:keydown={handleKeydown}>
+<button class={buttonClass}>
   <span class={buttonTextClass}>{buttonText}</span>
 
   <div class="menu-icon" aria-hidden={true}>
@@ -37,11 +35,24 @@
     font-family: var(--font-sans);
     color: var(--color-black);
     background-color: transparent;
-    transition: all ease-in-out 400ms;
+    transition: outline 100ms;
+  }
+
+  .menu-button--open:focus,
+  .menu-button--open:active {
+    transition: none;
+    outline: 2px dashed white;
   }
 
   .menu-button__text {
-    transition: all 100ms ease;
+    position: absolute;
+    left: -6ch;
+    transition: all ease-in-out 300ms;
+  }
+
+  .menu-button__text--open {
+    opacity: 0.5;
+    transform: translateX(50vw);
   }
 
   .menu-icon {

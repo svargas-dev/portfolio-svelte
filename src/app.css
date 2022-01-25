@@ -1,3 +1,6 @@
+@custom-media --motionOK (prefers-reduced-motion: no-preference);
+@custom-media --dark (prefers-color-scheme: dark);
+
 :root {
   --font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
   --font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
@@ -6,6 +9,7 @@
   --color-gray: #0f11123d;
   --color-green: #b7d6c5;
   --color-orange: #f08c68;
+  --color-orange-alpha: #f08c6863;
   --color-purple: #884271;
 }
 
@@ -43,15 +47,24 @@ p,
 button,
 label {
   font-size: clamp(0.9em, 0.25em + 1.75vw, 1.2em);
-  border-radius: 0.125em;
 }
 
 label {
   font-weight: 500;
 }
 
+button {
+  border-radius: 0.125rem;
+}
+
 button:hover {
   cursor: pointer;
+}
+
+a:focus,
+button:focus {
+  transition: none;
+  outline: 0.2em dashed var(--color-black);
 }
 
 #svelte {

@@ -27,6 +27,7 @@
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.2.3",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.44.0",

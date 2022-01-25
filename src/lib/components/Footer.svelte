@@ -34,7 +34,8 @@
   </a>
 
   <a
-    href="https://www.linkedin.com/in/image/sam-vargas-38588bb5/"
+ 
+    href="https://www.linkedin.com/in/sam-vargas-38588bb5"
     target="_blank"
     rel="noopener noreferrer"
   >
@@ -62,6 +63,11 @@
 
   a {
     margin-inline: 1em;
+  }
+
+  a svg {
+    position: relative;
+    top: 0.25ch;
   }
 
   /* Mobile + tablet */
