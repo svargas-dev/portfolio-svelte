@@ -2,25 +2,32 @@
   /**
    * A good candidate for SVG animation instead here
    */
+  import { fade } from 'svelte/transition';
+
   export let isOpen: boolean;
 
   $: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';
   $: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
-  $: buttonText = isOpen ? 'CLOSE' : 'MENU';
-  $: menuDot1Class = isOpen ? 'menu-dot menu-dot--close menu-dot-1--close' : 'menu-dot menu-dot-1';
-  $: menuDot2Class = isOpen ? 'menu-dot menu-dot--close' : 'menu-dot menu-dot-2';
-  $: menuDot3Class = isOpen ? 'menu-dot menu-dot--close' : 'menu-dot menu-dot-3';
-  $: menuDot4Class = isOpen ? 'menu-dot menu-dot--close menu-dot-4--close' : 'menu-dot menu-dot-4';
+  $: menuAtom1 = isOpen ? 'menu-atom menu-cross-1' : 'menu-atom menu-dot menu-dot-1';
+  $: menuAtom2 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-2';
+  $: menuAtom3 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-3';
+  $: menuAtom4 = isOpen ? 'menu-atom menu-cross-2' : 'menu-atom menu-dot menu-dot-4';
 </script>
 
 <button class={buttonClass}>
-  <span class={buttonTextClass}>{buttonText}</span>
+  <div class={buttonTextClass}>
+    {#if !isOpen}
+      <span transition:fade>MENU</span>
+    {:else}
+      <span in:fade={{ delay: 400, duration: 10 }} out:fade={{ duration: 10 }}>CLOSE</span>
+    {/if}
+  </div>
 
   <div class="menu-icon" aria-hidden={true}>
-    <div class={menuDot1Class} />
-    <div class={menuDot2Class} />
-    <div class={menuDot3Class} />
-    <div class={menuDot4Class} />
+    <div class={menuAtom1} />
+    <div class={menuAtom2} />
+    <div class={menuAtom3} />
+    <div class={menuAtom4} />
   </div>
 </button>
 
@@ -30,7 +37,8 @@
     z-index: 3;
     top: 1.5em;
     right: 1.5em;
-    max-height: 3em;
+    height: 3em;
+    width: 3em;
     display: flex;
     align-items: center;
     border: none;
@@ -49,73 +57,67 @@
 
   .menu-button__text {
     position: absolute;
-    left: -6ch;
-    transition: all ease-in-out 300ms;
+    transform: translateX(-3.75em);
+    transition: transform 300ms;
   }
 
   .menu-button__text--open {
-    opacity: 0.5;
     transform: translateX(50vw);
   }
 
   .menu-icon {
     width: 3em;
     height: 3em;
-    position: relative;
+    position: absolute;
+    left: 0;
   }
 
-  .menu-dot {
+  .menu-atom {
     width: 0.5em;
     height: 0.5em;
     border-radius: 0.25em;
     background-color: var(--color-green);
     position: absolute;
     margin: auto auto;
-    transition: all ease-in 200ms;
+    transition: all ease-in 300ms;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    will-change: transform;
+  }
+
+  .d-none {
+    content-visibility: hidden;
   }
 
   .menu-dot-1 {
-    top: 0;
-    left: 0.5em;
-    bottom: 0;
+    transform: translateX(-0.75em);
   }
 
   .menu-dot-2 {
-    top: 0.5em;
-    left: 0;
-    right: 0;
+    transform: translateY(-0.75em);
   }
 
   .menu-dot-3 {
-    bottom: 0.5em;
-    left: 0;
-    right: 0;
+    transform: translateY(0.75em);
   }
 
   .menu-dot-4 {
-    right: 0.5em;
-    top: 0;
-    bottom: 0;
+    transform: translateX(0.75em);
+  }
+  .menu-button:focus .menu-dot,
+  .menu-button:hover .menu-dot {
+    transform: translate(0, 0);
   }
 
-  /* TODO This isn't a good idea as it causes layout recalculations 👀
-  * Probably better to set all initially in this position then transform translate
-  */
-  .menu-button:hover .menu-dot,
-  .menu-dot--close {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  .menu-cross-1 {
+    border-radius: 0;
+    transform: rotate(45deg) scaleX(4);
   }
 
-  .menu-dot-1--close {
-    width: 2.5em; /* 👀 */
-    transform: rotate(45deg);
-  }
-
-  .menu-dot-4--close {
-    width: 2.5em; /* 👀 */
-    transform: rotate(-45deg);
+  .menu-cross-2 {
+    border-radius: 0;
+    transform: rotate(-45deg) scaleX(4);
   }
 </style>
