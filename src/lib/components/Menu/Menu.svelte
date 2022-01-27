@@ -21,7 +21,7 @@
   $: navClass = isOpen ? 'nav--open' : '';
 </script>
 
-<!-- TypeScript defs for HTMLDivElement need to be updated for inert tag -->
+<!-- TypeScript defs for HTMLElement need to be updated for inert tag -->
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert -->
 <aside bind:this={navWrapperEl} on:click={toggleOpen} on:keydown={handleKeydown} inert={!isOpen}>
   <MenuButton {isOpen} />

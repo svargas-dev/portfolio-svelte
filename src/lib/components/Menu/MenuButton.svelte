@@ -8,6 +8,7 @@
 
   $: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';
   $: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
+
   $: menuAtom1 = isOpen ? 'menu-atom menu-cross-1' : 'menu-atom menu-dot menu-dot-1';
   $: menuAtom2 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-2';
   $: menuAtom3 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-3';
@@ -15,11 +16,13 @@
 </script>
 
 <button class={buttonClass}>
-  <div class={buttonTextClass}>
+  <div class={buttonTextClass} role="status" aria-live="polite">
     {#if !isOpen}
       <span transition:fade>MENU</span>
     {:else}
-      <span in:fade={{ delay: 400, duration: 10 }} out:fade={{ duration: 10 }}>CLOSE</span>
+      <span class="sr-only" in:fade={{ delay: 400, duration: 1 }} out:fade={{ duration: 1 }}>
+        CLOSE
+      </span>
     {/if}
   </div>
 
@@ -78,12 +81,12 @@
     border-radius: 0.25em;
     background-color: var(--color-green);
     position: absolute;
-    margin: auto auto;
-    transition: all ease-in 300ms;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    margin: auto auto;
+    transition: all ease-in 200ms;
     will-change: transform;
   }
 

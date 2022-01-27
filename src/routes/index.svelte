@@ -76,15 +76,15 @@
       <div class="about">
         <h2>About</h2>
         <p>
-          I am a maker and creative problem solver dedicated to creating impactful, accessible and
-          performant solutions.
+          I am a maker and creative problem solver dedicated to creating impactful, performant and
+          accessible solutions.
         </p>
         <p>
           After nearly a decade working at sea as an officer on board merchant ships, specialising
           in polar oceanographic research, I began a new journey into web and software engineering.
-          From books, video courses and friends I dived into the depths and in 2019 graduated from
-          Ironhack Lisbon after an intensive bootcamp focused on today's tech and best practices.
-          Fast forward to today, I have skyrocketed start-ups’ performance, SEO and accessibility.
+          From books, video courses and friends, I dived into the depths and in 2019 graduated from
+          Ironhack Lisbon &mdash; a top-rated bootcamp focused on today's tech and best practices.
+          Fast forward to today, I have skyrocketed start-ups’ Core Web Vitals, SEO and a11y.
         </p>
         <p class="this-site">
           Interested? Check out the <a
@@ -132,7 +132,7 @@
             <textarea
               id="contact-message"
               name="contact-message"
-              rows="7"
+              rows="6"
               maxlength="512"
               required
               on:change={handleChange}
@@ -218,7 +218,9 @@
     width: 100%;
     height: 100vh;
     overflow: auto;
-    /* fade out effect top and bottom. 2nd linear gradient preserves browser scrollbar styling */
+    /* fade out effect top and bottom visible on scroll
+     * 2nd linear gradient preserves browser scrollbar styling
+     */
     mask-image: linear-gradient(transparent 3%, black 15%, black 85%, transparent 97%),
       linear-gradient(to right, transparent calc(100% - 1rem), black calc(100% - 1rem));
     -webkit-mask-image: linear-gradient(transparent 3%, black 15%, black 85%, transparent 97%),
@@ -237,9 +239,9 @@
     width: 100%;
     height: 100vh;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
     scroll-snap-align: center;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
   }
 
   .headline {
@@ -251,7 +253,6 @@
 
   .headline h1,
   .headline h2 {
-    line-height: 1;
     margin: 0;
     border-radius: 0.25em;
   }
@@ -329,13 +330,13 @@
     }
 
     .headline {
-      grid-column: 3 / 6;
-      grid-row: 3;
+      grid-column: 3 / 7;
+      grid-row: 4;
     }
 
     .about,
     .contact {
-      grid-column: 2 / 6;
+      grid-column: 2 / 8;
       grid-row: 1 / 4;
       padding-block: 2em;
     }
@@ -363,9 +364,15 @@
         fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-900.webp') var(--color-white);
     }
 
+    .headline {
+      grid-column: 4 / 9;
+      grid-row: 4;
+    }
+
     .about,
     .contact {
-      grid-column: 2 / 6;
+      grid-column: 2 / 8;
+      grid-row: 1 / 6;
       padding-block: 3em;
     }
   }
@@ -386,14 +393,14 @@
     }
 
     .headline {
-      grid-column: 4 / 6;
-      grid-row: 3;
+      grid-column: 5 / 8;
+      grid-row: 4 / 5;
     }
 
     .about,
     .contact {
-      grid-column: 4 / 6;
-      grid-row: 2 / 4;
+      grid-column: 4 / 8;
+      grid-row: 1 / 7;
     }
   }
 </style>
