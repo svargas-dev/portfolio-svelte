@@ -81,10 +81,11 @@
         </p>
         <p>
           After nearly a decade working at sea as an officer on board merchant ships, specialising
-          in polar oceanographic research, I began a new journey into web and software engineering.
-          From books, video courses and friends, I dived into the depths and in 2019 graduated from
-          Ironhack Lisbon &mdash; a top-rated bootcamp focused on today's tech and best practices.
-          Fast forward to today, I have skyrocketed start-ups’ Core Web Vitals, SEO and a11y.
+          in polar oceanographic research, I began a new journey into web development and software
+          and engineering. From books, video courses and friends, I dived into the depths and in
+          2019 graduated from Ironhack Lisbon &mdash; a top-rated bootcamp focused on today's tech
+          and best practices. Fast forward to today, I have skyrocketed start-ups’ Core Web Vitals,
+          SEO and a11y.
         </p>
         <p class="this-site">
           Interested? Check out the <a
