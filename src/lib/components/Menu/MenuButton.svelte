@@ -49,7 +49,6 @@
     font-family: var(--font-sans);
     color: var(--color-black);
     background-color: transparent;
-    transition: outline 100ms;
   }
 
   .menu-button--open:focus,

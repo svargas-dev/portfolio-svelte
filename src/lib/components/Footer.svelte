@@ -58,15 +58,16 @@
 <style>
   footer {
     position: fixed;
+    display: flex;
   }
 
   a {
+    display: flex;
+    width: 2.5em;
+    height: 2.5em;
+    justify-content: center;
+    align-items: center;
     margin-inline: 1em;
-  }
-
-  a svg {
-    position: relative;
-    top: 0.25ch;
   }
 
   /* Mobile + tablet */
