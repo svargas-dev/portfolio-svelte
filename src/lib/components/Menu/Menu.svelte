@@ -33,7 +33,7 @@
   </nav>
 </aside>
 
-<style>
+<style lang="postcss">
   nav {
     position: absolute;
     z-index: 1;
@@ -48,7 +48,15 @@
     padding-inline: 3em;
     padding-block: 9em;
     transform: translateX(105vw);
-    transition: 400ms ease-in-out;
+    opacity: 0;
+
+    @media (--motionNotOK) {
+      transition: opacity 200ms ease-in-out;
+    }
+
+    @media (--motionOK) {
+      transition: transform 400ms ease-in-out;
+    }
   }
 
   /**
@@ -67,6 +75,7 @@
 
   .nav--open {
     transform: translateX(0);
+    opacity: 1;
   }
 
   a {

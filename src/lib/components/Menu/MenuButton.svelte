@@ -34,7 +34,7 @@
   </div>
 </button>
 
-<style>
+<style lang="postcss">
   .menu-button {
     position: fixed;
     z-index: 3;
@@ -61,7 +61,10 @@
   .menu-button__text {
     position: absolute;
     transform: translateX(-3.75em);
-    transition: transform 300ms;
+
+    @media (--motionOK) {
+      transition: transform 300ms;
+    }
   }
 
   .menu-button__text--open {
@@ -86,8 +89,15 @@
     bottom: 0;
     left: 0;
     margin: auto auto;
-    transition: all ease-in 200ms;
     will-change: transform;
+
+    @media (--motionNotOK) {
+      transition: transform 100ms;
+    }
+
+    @media (--motionOK) {
+      transition: transform ease-in 200ms;
+    }
   }
 
   .d-none {
