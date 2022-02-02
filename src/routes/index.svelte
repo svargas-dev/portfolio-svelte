@@ -64,6 +64,18 @@
 
 <!-- need a wrapper for the background because of the mask on the content -->
 <div class="wrapper-bg">
+  <picture>
+    <source
+      srcset="image/sam-vargas-480.webp 400w, image/sam-vargas-900.webp 800w, image/sam-vargas-1200.webp 1067w"
+      type="image/webp"
+    />
+    <source
+      srcset="image/sam-vargas-480.png 400w, image/sam-vargas-900.png 800w, image/sam-vargas-1200.png 1067w"
+      type="image/png"
+    />
+    <img class="img--sam-vargas" src="image/sam-vargas-900.png" alt="Sam Vargas" />
+  </picture>
+
   <div bind:this={wrapperEl} class="wrapper-content" dir="ltr" on:scroll={shouldShowBackToTop}>
     <section id="home">
       <div class="headline">
@@ -154,7 +166,21 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
+  picture img {
+    position: fixed;
+    bottom: 0;
+
+    @media (max-width: 1024px) {
+      left: 0;
+      width: 42vw;
+    }
+
+    @media (min-width: 1025px) {
+      left: 0.5vw;
+      height: 100vh;
+    }
+  }
   a {
     text-decoration: none;
     padding-inline: 0.1ch;
@@ -325,6 +351,10 @@
 
   /* Mobile + tablet */
   @media (max-width: 1024px) {
+    .wrapper-bg {
+      background: linear-gradient(var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
+    }
+
     .scroll-to-top {
       bottom: 5em;
       right: 2em;
@@ -350,21 +380,8 @@
     }
   }
 
-  /* Mobile */
-  @media (max-width: 480px) {
-    .wrapper-bg {
-      background: linear-gradient(var(--color-orange) 0.5vw, transparent 0.5vw),
-        fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-480.webp') var(--color-white);
-    }
-  }
-
   /* Tablets */
   @media (min-width: 481px) and (max-width: 1024px) {
-    .wrapper-bg {
-      background: linear-gradient(var(--color-orange) 0.5vw, transparent 0.5vw),
-        fixed left bottom / auto 55vw no-repeat url('/image/sam-vargas-900.webp') var(--color-white);
-    }
-
     .headline {
       grid-column: 4 / 9;
       grid-row: 4;
@@ -381,9 +398,7 @@
   /* Desktop */
   @media (min-width: 1025px) {
     .wrapper-bg {
-      background: linear-gradient(to right, var(--color-orange) 0.5vw, transparent 0.5vw),
-        fixed left bottom / auto 100vh no-repeat url('/image/sam-vargas-1200.webp')
-          var(--color-white);
+      background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
     }
 
     .scroll-to-top {
