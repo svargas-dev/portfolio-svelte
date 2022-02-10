@@ -19,6 +19,7 @@ export function trapFocus(element: HTMLElement): () => void | undefined {
   const firstFocusableEl = focusableEls[0] as FocusableElement;
   const lastFocusableEl = focusableEls[focusableEls.length - 1] as FocusableElement;
 
+  // for older browser support
   const KEYCODE_TAB = 9;
 
   function loopFocus(e: KeyboardEvent) {

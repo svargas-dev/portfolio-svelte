@@ -42,7 +42,7 @@
   /**
    * Svelte's TS defs are still lacking unfortunately
    */
-  function handleChange(event): void {
+  function handleChange(event: any): void {
     formData = { ...formData, [event.target.name]: event.target.value };
   }
 
@@ -50,7 +50,7 @@
    * Submit netlify form
    * Svelte's TS defs are still lacking unfortunately
    */
-  function handleSubmit(event): void {
+  function handleSubmit(event: any): void {
     result = FormStatus.Sending;
     fetch('/', {
       method: 'POST',
@@ -349,6 +349,16 @@
     top: 12.5%;
   }
 
+  /* Mobile */
+  @media (max-width: 480px) {
+    .about,
+    .contact {
+      grid-column: 2 / 8;
+      grid-row: 1 / 4;
+      padding-block: 2em;
+    }
+  }
+
   /* Mobile + tablet */
   @media (max-width: 1024px) {
     .wrapper-bg {
@@ -363,13 +373,6 @@
     .headline {
       grid-column: 3 / 7;
       grid-row: 4;
-    }
-
-    .about,
-    .contact {
-      grid-column: 2 / 8;
-      grid-row: 1 / 4;
-      padding-block: 2em;
     }
   }
 
@@ -389,7 +392,7 @@
 
     .about,
     .contact {
-      grid-column: 2 / 8;
+      grid-column: 4 / 8;
       grid-row: 1 / 6;
       padding-block: 3em;
     }
