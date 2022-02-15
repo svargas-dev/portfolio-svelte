@@ -33,11 +33,7 @@
     </svg>
   </a>
 
-  <a
-    href="https://www.linkedin.com/in/sam-vargas-38588bb5"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  <a href="https://www.linkedin.com/in/sam-vargas" target="_blank" rel="noopener noreferrer">
     <span class="sr-only">LinkedIn</span>
     <svg
       xmlns="http://www.w3.org/2000/svg"
