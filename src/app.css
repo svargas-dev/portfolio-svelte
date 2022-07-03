@@ -3,31 +3,32 @@
 @custom-media --dark (prefers-color-scheme: dark);
 
 :root {
-  --font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
-  --font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
-  --color-white: #f0eeed;
-  --color-black: #0f1112;
-  --color-gray: #0f11123d;
-  --color-green: #b7d6c5;
-  --color-orange: #f08c68;
-  --color-orange-alpha: #f08c6863;
-  --color-purple: #884271;
+	--font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
+	--font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
+	--color-white: #f0eeed;
+	--color-white-alpha: rgba(240 238 237 /0.7);
+	--color-black: #0f1112;
+	--color-gray: #0f11123d;
+	--color-green: #b7d6c5;
+	--color-orange: #f08c68;
+	--color-orange-alpha: #f08c6863;
+	--color-purple: #884271;
 }
 
 html * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  @media (--motionOK) {
-    scroll-behavior: smooth;
-  }
+	@media (--motionOK) {
+		scroll-behavior: smooth;
+	}
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
-  font-family: var(--font-sans);
-  overflow: hidden;
+	width: 100vw;
+	height: 100vh;
+	min-height: 100vh;
+	font-family: var(--font-sans);
+	overflow: hidden;
 }
 
 h1,
@@ -36,63 +37,63 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-serif);
+	font-family: var(--font-serif);
 }
 
 /* Fluid typography */
 h1 {
-  font-size: clamp(2em, 0.5em + 3vw, 3.25em);
+	font-size: clamp(2em, 0.5em + 3vw, 3.25em);
 }
 
 h2 {
-  font-size: clamp(1.25em, 0.5em + 2vw, 1.75em);
+	font-size: clamp(1.25em, 0.5em + 2vw, 1.75em);
 }
 
 p,
 button,
 label {
-  font-size: clamp(0.9em, 0.25em + 1.75vw, 1.2em);
+	font-size: clamp(0.9em, 0.25em + 1.75vw, 1.2em);
 }
 
 label {
-  font-weight: 500;
+	font-weight: 500;
 }
 
 button {
-  border-radius: 0.125rem;
+	border-radius: 0.125rem;
 }
 
 button:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 a:focus,
 button:focus {
-  transition: none;
-  outline: 0.2em dashed var(--color-black);
+	transition: none;
+	outline: 0.2em dashed var(--color-black);
 }
 
 #svelte {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
 }
 
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
 }
 
 .bg-white {
-  background-color: var(--color-white);
+	background-color: var(--color-white);
 }
 
 .bg-black {
-  background-color: var(--color-black);
+	background-color: var(--color-black);
 }

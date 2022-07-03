@@ -10,43 +10,40 @@
  * the focused element before opening e.g. for use with a modal
  * then restore when closing
  */
-export function trapFocus(element: HTMLElement): () => void | undefined {
-  if (typeof document === 'undefined') return;
+export function trapFocus(element: HTMLElement): (() => void) | undefined {
+	if (typeof document === 'undefined') return undefined;
 
-  const focusableEls = element.querySelectorAll(
-    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
-  );
-  const firstFocusableEl = focusableEls[0] as FocusableElement;
-  const lastFocusableEl = focusableEls[focusableEls.length - 1] as FocusableElement;
+	const focusableEls = element.querySelectorAll(
+		'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+	);
+	const firstFocusableEl = focusableEls[0] as FocusableElement;
+	const lastFocusableEl = focusableEls[focusableEls.length - 1] as FocusableElement;
 
-  // for older browser support
-  const KEYCODE_TAB = 9;
+	function loopFocus(e: KeyboardEvent) {
+		const isTabPressed = e.key === 'Tab';
 
-  function loopFocus(e: KeyboardEvent) {
-    const isTabPressed = e.key === 'Tab' || e.keyCode === KEYCODE_TAB;
+		if (!isTabPressed) {
+			return;
+		}
 
-    if (!isTabPressed) {
-      return;
-    }
+		if (e.shiftKey) {
+			/* shift + tab */ if (document.activeElement === firstFocusableEl) {
+				lastFocusableEl.focus();
+				e.preventDefault();
+			}
+		} /* tab */ else {
+			if (document.activeElement === lastFocusableEl) {
+				firstFocusableEl.focus();
+				e.preventDefault();
+			}
+		}
+	}
 
-    if (e.shiftKey) {
-      /* shift + tab */ if (document.activeElement === firstFocusableEl) {
-        lastFocusableEl.focus();
-        e.preventDefault();
-      }
-    } /* tab */ else {
-      if (document.activeElement === lastFocusableEl) {
-        firstFocusableEl.focus();
-        e.preventDefault();
-      }
-    }
-  }
+	element.addEventListener('keydown', loopFocus);
 
-  element.addEventListener('keydown', loopFocus);
-
-  return function cleanup() {
-    element.removeEventListener('keydown', loopFocus);
-  };
+	return function cleanup() {
+		element.removeEventListener('keydown', loopFocus);
+	};
 }
 
 type FocusableElement = Element & { focus: () => void };
