@@ -61,15 +61,17 @@
 			toastStore.update((toasts) => toasts.concat(result));
 		}
 	}
-
-	function handleChange(event): void {
+  
+  /* Svelte still doesn't give us types for these */
+	function handleChange(event: any): void {
 		formData = { ...formData, [event.target.name]: event.target.value };
 	}
 
 	/**
 	 * Submit netlify form
+   * Svelte still doesn't give us types for these
 	 */
-	function handleSubmit(event): void {
+	function handleSubmit(event: any): void {
 		result = FormStatus.Sending;
 		fetch('/', {
 			method: 'POST',
