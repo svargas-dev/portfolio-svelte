@@ -62,18 +62,14 @@
 		}
 	}
 
-	/**
-	 * Svelte's TS defs are still lacking unfortunately
-	 */
-	function handleChange(event: any): void {
+	function handleChange(event): void {
 		formData = { ...formData, [event.target.name]: event.target.value };
 	}
 
 	/**
 	 * Submit netlify form
-	 * Svelte's TS defs are still lacking unfortunately
 	 */
-	function handleSubmit(event: any): void {
+	function handleSubmit(event): void {
 		result = FormStatus.Sending;
 		fetch('/', {
 			method: 'POST',
@@ -196,6 +192,7 @@
 	.image-wrapper picture img {
 		margin: 0;
 		padding: 0;
+		opacity: 1;
 		transform-origin: bottom left;
 		will-change: transform;
 		transition: transform 150ms linear, filter 150ms linear;
@@ -209,6 +206,13 @@
 
 		@media (min-width: 1025px) {
 			height: 100vh;
+		}
+
+		/* hide image with Android onscreen keyboard
+       as it can make reading the form difficult
+    */
+		@media (max-height: 400px) {
+			opacity: 0;
 		}
 	}
 
