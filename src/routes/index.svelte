@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { encode } from '$lib/utils/encode';
-	import { toastStore } from '$lib/stores/toastStore';
 	import { buildThresholdList, observeIntersection } from '$lib/utils/intersectionObserver';
+	import Form from '$lib/components/Form.svelte';
 
 	export const prerender = true;
 
@@ -47,40 +46,6 @@
 
 		mainEl.scrollTo(0, 0);
 	}
-
-	let formData = {};
-	enum FormStatus {
-		Initial = '',
-		Sending = 'Sending ...',
-		Sent = 'Form sent',
-		Error = 'There was an error sending the form. Please try again'
-	}
-	let result = FormStatus.Initial;
-	$: {
-		if (result) {
-			toastStore.update((toasts) => toasts.concat(result));
-		}
-	}
-  
-  /* Svelte still doesn't give us types for these */
-	function handleChange(event: any): void {
-		formData = { ...formData, [event.target.name]: event.target.value };
-	}
-
-	/**
-	 * Submit netlify form
-   * Svelte still doesn't give us types for these
-	 */
-	function handleSubmit(event: any): void {
-		result = FormStatus.Sending;
-		fetch('/', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			body: encode({ 'form-name': event.target.name, ...formData })
-		})
-			.then(() => (result = FormStatus.Sent))
-			.catch(() => (result = FormStatus.Error));
-	}
 </script>
 
 <div class="wrapper">
@@ -121,7 +86,7 @@
 					best practices. Fast forward to today, I have skyrocketed start-ups’ Core Web Vitals, SEO
 					and a11y.
 				</p>
-				<p class="this-site">
+				<p>
 					Interested? Drop me a line in the form below or check out the <a
 						href="https://github.com/svargas-dev"
 						target="_blank"
@@ -134,51 +99,7 @@
 		<section id="contact">
 			<div class="contact">
 				<h2>Contact</h2>
-				<form
-					name="contact"
-					data-netlify="true"
-					netlify-honeypot="bot-field"
-					on:submit|preventDefault={handleSubmit}
-				>
-					<!-- Could add validation on blur in the future -->
-					<input type="hidden" name="form-name" value="contact" />
-					<label for="contact-name">
-						Name<br />
-						<input
-							id="contact-name"
-							name="contact-name"
-							type="text"
-							required
-							on:change={handleChange}
-						/>
-					</label>
-					<label for="contact-email">
-						Email<br />
-						<input
-							id="contact-email"
-							name="contact-email"
-							type="email"
-							required
-							on:change={handleChange}
-						/>
-					</label>
-					<label for="contact-message">
-						Message<br />
-						<textarea
-							id="contact-message"
-							name="contact-message"
-							rows="6"
-							maxlength="512"
-							required
-							on:change={handleChange}
-						/>
-					</label>
-
-					<button
-						type="submit"
-						disabled={result === FormStatus.Sending || result === FormStatus.Sent}>Send</button
-					>
-				</form>
+				<Form />
 			</div>
 		</section>
 	</main>
@@ -331,53 +252,6 @@
 		width: 66.666%;
 		border-bottom: 0.25em solid var(--color-purple);
 		padding-block: 1rem;
-	}
-
-	.contact form {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.contact label {
-		margin: 0.5em 0;
-	}
-
-	.contact form input,
-	.contact form textarea {
-		width: 100%;
-		resize: none;
-		margin: 0.25em 0;
-	}
-
-	input:focus,
-	textarea:focus {
-		outline: 2px solid var(--color-orange);
-	}
-
-	.contact form button {
-		width: max-content;
-		padding-block: 0.25em;
-		padding-inline: 0.5em;
-		border: none;
-		border-radius: 0.125em;
-		background-color: var(--color-black);
-		color: var(--color-white);
-		margin-inline: auto;
-		transition: box-shadow 150ms ease-in-out;
-	}
-
-	.contact form button:focus {
-		outline: 2px solid var(--color-orange);
-	}
-
-	.contact form button:hover {
-		box-shadow: 0 0 0.25em 0.2em var(--color-gray);
-	}
-
-	.contact form button:disabled {
-		cursor: not-allowed;
-		opacity: 0.666;
-		box-shadow: none;
 	}
 
 	.about,
