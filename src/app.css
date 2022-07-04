@@ -14,6 +14,7 @@
 	--color-orange: #f08c68;
 	--color-orange-alpha: #f08c6863;
 	--color-purple: #884271;
+	--color-dark-mode-bg: rgb(59, 59, 59);
 }
 
 html * {
@@ -29,6 +30,7 @@ body {
 	height: 100vh;
 	min-height: 100vh;
 	font-family: var(--font-sans);
+	color: var(--color-black);
 	overflow: hidden;
 }
 
@@ -72,6 +74,10 @@ a:focus,
 button:focus {
 	transition: none;
 	outline: 0.2em dashed var(--color-black);
+
+	@media (--dark) {
+		outline: 0.2em dashed var(--color-white);
+	}
 }
 
 #svelte {
@@ -97,4 +103,11 @@ button:focus {
 
 .bg-black {
 	background-color: var(--color-black);
+}
+
+@media (--dark) {
+	body,
+	a {
+		color: var(--color-white);
+	}
 }

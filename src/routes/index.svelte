@@ -122,6 +122,12 @@
 </div>
 
 <style lang="postcss">
+	.wrapper {
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+	}
+
 	.image-wrapper,
 	.image-wrapper picture,
 	.image-wrapper picture img {
@@ -157,14 +163,13 @@
 
 	a {
 		text-decoration: none;
-		padding-inline: 0.1ch;
-		padding-block: 0.25ch;
+		padding: 0.1ch;
 		position: relative;
 		color: var(--color-black);
-	}
 
-	a:focus {
-		outline: 0.2em dashed var(--color-black);
+		@media (--dark) {
+			color: var(--color-white);
+		}
 	}
 
 	a::before {
@@ -207,11 +212,22 @@
 		border: none;
 		border-bottom: 0.25em solid var(--color-gray);
 		transition: all 300ms ease;
+
+		@media (--dark) {
+			color: var(--color-white);
+			background-color: unset;
+			border-bottom: 0.25em solid var(--color-white);
+		}
 	}
 
 	.scroll-to-top:focus {
 		filter: invert(1);
 		outline: none;
+
+		@media (--dark) {
+			filter: initial;
+			box-shadow: 0 4px 0 3px var(--color-orange);
+		}
 	}
 
 	.wrapper-content {
@@ -231,12 +247,6 @@
 		@media (--motionOK) {
 			scroll-snap-type: y mandatory;
 		}
-	}
-
-	.wrapper {
-		position: fixed;
-		width: 100vw;
-		height: 100vh;
 	}
 
 	section {
@@ -296,6 +306,10 @@
 	@media (max-width: 1024px) {
 		.wrapper {
 			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
+
+			@media (--dark) {
+				background: linear-gradient(var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
+			}
 		}
 
 		.scroll-to-top {
@@ -335,6 +349,10 @@
 	@media (min-width: 1025px) {
 		.wrapper {
 			background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
+
+			@media (--dark) {
+				background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
+			}
 		}
 
 		.scroll-to-top {

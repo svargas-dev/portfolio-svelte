@@ -51,6 +51,10 @@
 		transform: translateX(105vw);
 		opacity: 0;
 
+		@media (--dark) {
+			background-color: black;
+		}
+
 		@media (--motionNotOK) {
 			transition: opacity 200ms ease-in-out;
 		}
@@ -80,7 +84,7 @@
 	}
 
 	.nav--open::before {
-		background-color: rgba(0, 0, 0, 0.08);
+		background-color: rgba(0, 0, 0, 0.1);
 		transition: background-color ease-in-out 300ms 300ms;
 	}
 

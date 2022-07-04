@@ -47,15 +47,15 @@
 	<!-- Could add validation on blur in the future -->
 	<input type="hidden" name="form-name" value="contact" />
 	<label for="contact-name">
-		Name<br />
+		<span>Name</span>
 		<input id="contact-name" name="contact-name" type="text" required on:change={handleChange} />
 	</label>
 	<label for="contact-email">
-		Email<br />
+		<span>Email</span>
 		<input id="contact-email" name="contact-email" type="email" required on:change={handleChange} />
 	</label>
 	<label for="contact-message">
-		Message<br />
+		<span>Message</span>
 		<textarea
 			id="contact-message"
 			name="contact-message"
@@ -81,6 +81,10 @@
 		margin: 0.5em 0;
 	}
 
+	label > span {
+		display: block;
+	}
+
 	form input,
 	form textarea {
 		border: 1px solid var(--color-black);
@@ -88,6 +92,12 @@
 		resize: none;
 		margin: 0.25em 0;
 		transition: box-shadow 150ms ease-in-out;
+		padding: 0.25em 0.5em;
+
+		@media (--dark) {
+			background-color: rgb(59, 59, 59);
+			color: var(--color-white);
+		}
 	}
 
 	input:focus,
@@ -108,6 +118,11 @@
 		color: var(--color-white);
 		margin-inline: auto;
 		transition: box-shadow 150ms ease-in-out;
+
+		@media (--dark) {
+			color: var(--color-white);
+			background-color: var(--color-purple);
+		}
 	}
 
 	form button:hover {

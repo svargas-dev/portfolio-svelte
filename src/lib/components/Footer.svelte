@@ -51,7 +51,7 @@
 	</a>
 </footer>
 
-<style>
+<style lang="postcss">
 	footer {
 		position: fixed;
 		display: flex;
@@ -87,6 +87,12 @@
 			bottom: 2em;
 			right: 2em;
 			width: max-content;
+		}
+	}
+
+	@media (--dark) {
+		a svg {
+			fill: var(--color-white);
 		}
 	}
 </style>

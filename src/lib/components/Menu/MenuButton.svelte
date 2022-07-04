@@ -49,12 +49,23 @@
 		font-family: var(--font-sans);
 		color: var(--color-black);
 		background-color: transparent;
+
+		@media (--dark) {
+			color: var(--color-white);
+		}
 	}
 
 	.menu-button--open:focus,
 	.menu-button--open:active {
 		transition: none;
 		outline: 2px dashed white;
+	}
+
+	@media (--dark) {
+		.menu-button:focus,
+		.menu-button:active {
+			outline: 2px dashed white;
+		}
 	}
 
 	.menu-button__text {
