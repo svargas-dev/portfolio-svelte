@@ -129,7 +129,6 @@
 	.menu-dot-4 {
 		transform: translateX(0.75em);
 	}
-	.menu-button:focus .menu-dot,
 	.menu-button:hover .menu-dot {
 		transform: translate(0, 0);
 	}

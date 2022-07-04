@@ -87,7 +87,7 @@
 
 	form input,
 	form textarea {
-		border: 1px solid var(--color-black);
+		border: 1px solid var(--color-gray);
 		width: 100%;
 		resize: none;
 		margin: 0.25em 0;
@@ -105,6 +105,7 @@
 	button:focus {
 		outline-offset: 2px;
 		outline: 2px solid transparent;
+		order: 1px solid var(--color-black);
 		box-shadow: 0 0 0 3px var(--color-orange);
 	}
 

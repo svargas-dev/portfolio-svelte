@@ -163,7 +163,7 @@
 
 	a {
 		text-decoration: none;
-		padding: 0.1ch;
+		padding: 0.15ch;
 		position: relative;
 		color: var(--color-black);
 
@@ -174,8 +174,9 @@
 
 	a::before {
 		content: '';
+		width: 100%;
+		height: 100%;
 		position: absolute;
-		z-index: 1;
 		top: 0;
 		right: 0;
 		bottom: 0;
@@ -184,23 +185,28 @@
 		transition: border 300ms ease-in-out;
 	}
 
-	a:active::before,
 	a:focus::before {
-		border-block-end: 0.4em solid var(--color-orange-alpha);
+		opacity: 0;
 	}
 
 	a::after {
 		content: '';
+		width: 100%;
+		height: 100%;
 		position: absolute;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		left: 0;
-		transition: border 150ms ease-in-out;
+		opacity: 0;
+		border-block-end: 0.25em solid var(--color-orange-alpha);
+		transform: translateY(0.2em);
+		transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
 	}
 
 	a:hover::after {
-		border-block-end: 0.75em solid var(--color-orange-alpha);
+		opacity: 1;
+		transform: translateY(-0.2em);
 	}
 
 	.scroll-to-top {
@@ -271,17 +277,20 @@
 	.headline h1,
 	.headline h2 {
 		margin: 0;
-		border-radius: 0.25em;
 	}
 
 	.headline h1 {
 		width: max-content;
+		border-top-left-radius: 0.25em;
+		border-top-right-radius: 0.25em;
 		border-top: 0.25em solid var(--color-green);
 		padding-block: 0.85rem;
 	}
 
 	.headline h2 {
 		width: 66.666%;
+		border-bottom-left-radius: 0.25em;
+		border-bottom-right-radius: 0.25em;
 		border-bottom: 0.25em solid var(--color-purple);
 		padding-block: 1rem;
 	}

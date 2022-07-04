@@ -6,25 +6,25 @@ specifiers:
   '@sveltejs/adapter-auto': next
   '@sveltejs/adapter-static': 1.0.0-next.34
   '@sveltejs/kit': next
-  '@typescript-eslint/eslint-plugin': ^5.30.4
-  '@typescript-eslint/parser': ^5.30.4
+  '@typescript-eslint/eslint-plugin': ^5.27.0
+  '@typescript-eslint/parser': ^5.27.0
   autoprefixer: ^10.4.7
   cssnano: ^5.1.12
-  eslint: ^8.19.0
-  eslint-config-prettier: ^8.5.0
+  eslint: ^8.16.0
+  eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
   normalize.css: ^8.0.1
   postcss: ^8.4.14
   postcss-flexbugs-fixes: ^5.0.2
   postcss-load-config: ^4.0.1
   postcss-preset-env: ^7.7.2
-  prettier: ^2.7.1
+  prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
-  svelte: ^3.48.0
-  svelte-check: ^2.8.0
-  svelte-preprocess: ^4.10.7
-  tslib: ^2.4.0
-  typescript: ^4.7.4
+  svelte: ^3.44.0
+  svelte-check: ^2.7.1
+  svelte-preprocess: ^4.10.6
+  tslib: ^2.3.1
+  typescript: ^4.7.2
 
 dependencies:
   '@fontsource/ibm-plex-sans': 4.5.11
@@ -637,7 +637,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.1
-      caniuse-lite: 1.0.30001362
+      caniuse-lite: 1.0.30001363
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -683,7 +683,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001362
+      caniuse-lite: 1.0.30001363
       electron-to-chromium: 1.4.177
       node-releases: 2.0.5
       update-browserslist-db: 1.0.4_browserslist@4.21.1
@@ -702,13 +702,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.21.1
-      caniuse-lite: 1.0.30001362
+      caniuse-lite: 1.0.30001363
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001362:
-    resolution: {integrity: sha512-PFykHuC7BQTzCGQFaV6wD8IDRM3HpI83BXr99nNJhoOyDufgSuKlt0QVlWYt5ZJtEYFeuNVF5QY3kJcu8hVFjQ==}
+  /caniuse-lite/1.0.30001363:
+    resolution: {integrity: sha512-HpQhpzTGGPVMnCjIomjt+jvyUu8vNFo3TaDiZ/RcoTrlOq/5+tC8zHdsbgFB6MxmaY+jCpsH09aD80Bb4Ow3Sg==}
     dev: true
 
   /chalk/4.1.2:

@@ -30,8 +30,11 @@ body {
 	height: 100vh;
 	min-height: 100vh;
 	font-family: var(--font-sans);
-	color: var(--color-black);
 	overflow: hidden;
+}
+
+body * {
+	color: var(--color-black);
 }
 
 h1,
@@ -106,8 +109,7 @@ button:focus {
 }
 
 @media (--dark) {
-	body,
-	a {
+	body * {
 		color: var(--color-white);
 	}
 }
