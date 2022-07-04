@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { buildThresholdList, observeIntersection } from '$lib/utils/intersectionObserver';
 	import Form from '$lib/components/Form.svelte';
+	import { buildThresholdList, observeIntersection } from '$lib/utils/intersectionObserver';
+	import { prefersReducedMotion } from '$lib/utils/mediaQueries';
 
 	export const prerender = true;
 
@@ -15,7 +16,7 @@
 		const options = {
 			root: null,
 			rootMargin: '0px',
-			threshold: buildThresholdList(20)
+			threshold: buildThresholdList(32)
 		};
 		observeIntersection(observedEl, effectsOnIntersectionEvent(imageEl), options);
 	});
@@ -23,10 +24,21 @@
 	function effectsOnIntersectionEvent(elementToModify: HTMLElement): IntersectionObserverCallback {
 		return function (entries, _observer) {
 			entries.forEach((entry) => {
+				const reduceMotion = prefersReducedMotion();
 				// manipulate image
-				if (elementToModify && entry.intersectionRatio > 0.618) {
+				if (!reduceMotion && elementToModify && entry.intersectionRatio > 0.618) {
 					elementToModify.style.transform = `scale(${entry.intersectionRatio})`;
 					elementToModify.style.filter = `grayscale(${1 - entry.intersectionRatio})`;
+				}
+
+				if (reduceMotion && elementToModify && !entry.isIntersecting) {
+					elementToModify.style.transform = `scale(0.618)`;
+					elementToModify.style.filter = `grayscale(0.618)`;
+				}
+
+				if (reduceMotion && elementToModify && entry.isIntersecting) {
+					elementToModify.style.transform = `scale(1)`;
+					elementToModify.style.filter = `grayscale(0)`;
 				}
 
 				// scroll up button
@@ -123,6 +135,10 @@
 		bottom: 0;
 		left: 0;
 
+		@media (--motionNotOK) {
+			transition: transform 150ms ease-in-out;
+		}
+
 		@media (max-width: 1024px) {
 			width: 42vw;
 		}
@@ -210,8 +226,11 @@
 			linear-gradient(to right, transparent calc(100% - 1rem), black calc(100% - 1rem));
 		-webkit-mask-image: linear-gradient(transparent 3%, black 15%, black 85%, transparent 97%),
 			linear-gradient(to right, transparent calc(100% - 1rem), black calc(100% - 1rem));
-		scroll-snap-type: y mandatory;
 		overscroll-behavior: none;
+
+		@media (--motionOK) {
+			scroll-snap-type: y mandatory;
+		}
 	}
 
 	.wrapper {
@@ -224,9 +243,12 @@
 		width: 100%;
 		height: 100vh;
 		display: grid;
-		scroll-snap-align: center;
 		grid-template-columns: repeat(8, 1fr);
 		grid-template-rows: repeat(8, 1fr);
+
+		@media (--motionOK) {
+			scroll-snap-align: center;
+		}
 	}
 
 	.headline {

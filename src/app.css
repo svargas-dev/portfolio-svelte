@@ -1,6 +1,7 @@
 @custom-media --motionNotOK (prefers-reduced-motion: reduce);
 @custom-media --motionOK (prefers-reduced-motion: no-preference);
 @custom-media --dark (prefers-color-scheme: dark);
+/* TODO: add breakpoints as custom-media */
 
 :root {
 	--font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
