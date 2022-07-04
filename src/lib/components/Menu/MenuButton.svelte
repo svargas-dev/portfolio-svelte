@@ -3,8 +3,14 @@
 	 * A good candidate for SVG animation instead here
 	 */
 	import { fade } from 'svelte/transition';
+	import { menuButtonRefStore } from '$lib/stores/menuStore';
 
 	export let isOpen: boolean;
+
+	let menuButtonRef: HTMLButtonElement | null;
+	$: {
+		if (menuButtonRef) menuButtonRefStore.set(menuButtonRef);
+	}
 
 	$: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';
 	$: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
@@ -15,7 +21,7 @@
 	$: menuAtom4 = isOpen ? 'menu-atom menu-cross-2' : 'menu-atom menu-dot menu-dot-4';
 </script>
 
-<button class={buttonClass}>
+<button bind:this={menuButtonRef} class={buttonClass}>
 	<div class={buttonTextClass} role="status" aria-live="polite">
 		{#if !isOpen}
 			<span transition:fade>MENU</span>
@@ -55,16 +61,42 @@
 		}
 	}
 
+	.menu-button:focus,
+	.menu-button:active {
+		outline: 0.2em dashed var(--color-black);
+
+		@media (--dark) {
+			outline: 0.2em dashed var(--color-white);
+		}
+
+		@supports selector(:focus-visible) {
+			outline: none;
+
+			&:focus-visible {
+				outline: 0.2em dashed var(--color-black);
+
+				@media (--dark) {
+					outline: 0.2em dashed var(--color-white);
+				}
+			}
+		}
+	}
+
 	.menu-button--open:focus,
 	.menu-button--open:active {
 		transition: none;
-		outline: 2px dashed white;
-	}
+		outline: 0.2em dashed var(--color-white);
 
-	@media (--dark) {
-		.menu-button:focus,
-		.menu-button:active {
-			outline: 2px dashed white;
+		@media (--dark) {
+			outline: 0.2em dashed var(--color-black);
+		}
+
+		@supports selector(:focus-visible) {
+			outline: none;
+
+			&:focus-visible {
+				outline: 0.2em dashed var(--color-white);
+			}
 		}
 	}
 

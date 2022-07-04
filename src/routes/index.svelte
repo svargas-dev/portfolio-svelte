@@ -4,6 +4,7 @@
 	import Form from '$lib/components/Form.svelte';
 	import { buildThresholdList, observeIntersection } from '$lib/utils/intersectionObserver';
 	import { prefersReducedMotion } from '$lib/utils/mediaQueries';
+	import { menuButtonRefStore } from '$lib/stores/menuStore';
 
 	export const prerender = true;
 
@@ -31,12 +32,12 @@
 					elementToModify.style.filter = `grayscale(${1 - entry.intersectionRatio})`;
 				}
 
-				if (reduceMotion && elementToModify && !entry.isIntersecting) {
+				if (reduceMotion && elementToModify && entry.intersectionRatio < 0.3) {
 					elementToModify.style.transform = `scale(0.618)`;
 					elementToModify.style.filter = `grayscale(0.618)`;
 				}
 
-				if (reduceMotion && elementToModify && entry.isIntersecting) {
+				if (reduceMotion && elementToModify && entry.intersectionRatio >= 0.3) {
 					elementToModify.style.transform = `scale(1)`;
 					elementToModify.style.filter = `grayscale(0)`;
 				}
@@ -46,17 +47,23 @@
 					showScrollToTop = true;
 				}
 
-				if (showScrollToTop === true && entry.intersectionRatio >= 0.5) {
+				if (showScrollToTop === true && entry.intersectionRatio >= 0.2) {
 					showScrollToTop = false;
 				}
 			});
 		};
 	}
 
+	let menuButtonRef: HTMLButtonElement | null;
+	menuButtonRefStore.subscribe((value) => {
+		menuButtonRef = value;
+	});
+
 	function scrollToTop(): void {
-		if (typeof mainEl === 'undefined') return;
+		if (typeof mainEl === 'undefined' || menuButtonRef === null) return;
 
 		mainEl.scrollTo(0, 0);
+		menuButtonRef.focus();
 	}
 </script>
 
@@ -100,6 +107,7 @@
 				</p>
 				<p>
 					Interested? Drop me a line in the form below or check out the <a
+						class="link link-underline"
 						href="https://github.com/svargas-dev"
 						target="_blank"
 						rel="noopener noreferrer">source</a
@@ -162,54 +170,44 @@
 	}
 
 	a {
-		text-decoration: none;
-		padding: 0.15ch;
-		position: relative;
-		color: var(--color-black);
+		padding: 0 0.25ch;
+	}
+
+	a:focus {
+		outline: 0.2em dashed var(--color-black);
 
 		@media (--dark) {
-			color: var(--color-white);
+			outline: 0.2em dashed var(--color-white);
+		}
+
+		@supports selector(:focus-visible) {
+			outline: none;
+
+			&:focus-visible {
+				outline: 0.2em dashed var(--color-black);
+
+				@media (--dark) {
+					outline: 0.2em dashed var(--color-white);
+				}
+			}
 		}
 	}
 
-	a::before {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		border-block-end: 0.2em solid var(--color-orange);
-		transition: border 300ms ease-in-out;
+	a:focus::after {
+		border-block-end: 0.3em solid var(--color-purple);
 	}
 
-	a:focus::before {
-		opacity: 0;
-	}
-
-	a::after {
-		content: '';
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		opacity: 0;
-		border-block-end: 0.25em solid var(--color-orange-alpha);
-		transform: translateY(0.2em);
-		transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
-	}
-
-	a:hover::after {
-		opacity: 1;
-		transform: translateY(-0.2em);
+	@supports selector(:focus-visible) {
+		a:focus-visible::after {
+			border-block-end: none;
+			transform: unset;
+			opacity: unset;
+			transition: unset;
+		}
 	}
 
 	.scroll-to-top {
+		position: relative;
 		width: max-content;
 		height: 2em;
 		position: fixed;
@@ -227,13 +225,33 @@
 	}
 
 	.scroll-to-top:focus {
-		filter: invert(1);
 		outline: none;
+		border-radius: 0.125em;
+	}
+
+	.scroll-to-top::after {
+		content: '\2191'; /* unicode up arrow */
+		font-size: 2em;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: -1em;
+		right: 0;
+		left: 0;
+		opacity: 0;
+		transform: translateY(100%);
+		transition: all 150ms ease-in-out;
+		color: var(--color-gray);
 
 		@media (--dark) {
-			filter: initial;
-			box-shadow: 0 4px 0 3px var(--color-orange);
+			color: var(--color-white);
 		}
+	}
+
+	.scroll-to-top:focus::after,
+	.scroll-to-top:hover::after {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.wrapper-content {
@@ -277,6 +295,12 @@
 	.headline h1,
 	.headline h2 {
 		margin: 0;
+		/* fixes weird rendering issues on Safari */
+		box-shadow: 0 0 0 2px var(--color-white);
+
+		@media (--dark) {
+			box-shadow: 0 0 0 2px var(--color-black-mode-bg);
+		}
 	}
 
 	.headline h1 {

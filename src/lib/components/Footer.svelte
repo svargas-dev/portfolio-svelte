@@ -1,5 +1,5 @@
 <footer>
-	<a href="https://github.com/svargas-dev" target="_blank" rel="noopener noreferrer">
+	<a class="link" href="https://github.com/svargas-dev" target="_blank" rel="noopener noreferrer">
 		<span class="sr-only">Github</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@
 		</svg>
 	</a>
 
-	<a href="https://gitlab.com/svargas-dev" target="_blank" rel="noopener noreferrer">
+	<a class="link" href="https://gitlab.com/svargas-dev" target="_blank" rel="noopener noreferrer">
 		<span class="sr-only">Gitlab</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,12 @@
 		</svg>
 	</a>
 
-	<a href="https://www.linkedin.com/in/sam-vargas" target="_blank" rel="noopener noreferrer">
+	<a
+		class="link"
+		href="https://www.linkedin.com/in/sam-vargas"
+		target="_blank"
+		rel="noopener noreferrer"
+	>
 		<span class="sr-only">LinkedIn</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -64,6 +69,10 @@
 		justify-content: center;
 		align-items: center;
 		margin-inline: 1em;
+	}
+
+	a:focus::after {
+		border-block-end: 0.3em solid var(--color-orange);
 	}
 
 	/* Mobile + tablet */

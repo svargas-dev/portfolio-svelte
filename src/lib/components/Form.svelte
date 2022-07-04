@@ -66,9 +66,9 @@
 		/>
 	</label>
 
-	<button type="submit" disabled={result === FormStatus.Sending || result === FormStatus.Sent}
-		>Send</button
-	>
+	<button type="submit" disabled={result === FormStatus.Sending || result === FormStatus.Sent}>
+		Send
+	</button>
 </form>
 
 <style lang="postcss">
@@ -85,8 +85,8 @@
 		display: block;
 	}
 
-	form input,
-	form textarea {
+	input,
+	textarea {
 		border: 1px solid var(--color-gray);
 		width: 100%;
 		resize: none;
@@ -95,30 +95,36 @@
 		padding: 0.25em 0.5em;
 
 		@media (--dark) {
-			background-color: rgb(59, 59, 59);
+			background-color: var(--color-dark-mode-bg);
 			color: var(--color-white);
 		}
+	}
+
+	input,
+	textarea,
+	button {
+		outline-offset: 2px;
+		outline: 2px solid transparent;
 	}
 
 	input:focus,
 	textarea:focus,
 	button:focus {
-		outline-offset: 2px;
-		outline: 2px solid transparent;
-		order: 1px solid var(--color-black);
 		box-shadow: 0 0 0 3px var(--color-orange);
 	}
 
-	form button {
+	input:focus,
+	textarea:focus {
+		border: 1px solid rgb(52, 52, 52);
+	}
+
+	button {
 		width: max-content;
-		padding-block: 0.25em;
-		padding-inline: 0.5em;
 		border: none;
-		border-radius: 0.125em;
 		background-color: var(--color-black);
 		color: var(--color-white);
 		margin-inline: auto;
-		transition: box-shadow 150ms ease-in-out;
+		transition: box-shadow 150ms ease-in-out, filter 150ms ease-in-out;
 
 		@media (--dark) {
 			color: var(--color-white);
@@ -126,11 +132,11 @@
 		}
 	}
 
-	form button:hover {
-		box-shadow: 0 0 0.25em 0.2em var(--color-gray);
+	button:hover {
+		filter: contrast(1.2) opacity(0.9);
 	}
 
-	form button:disabled {
+	button:disabled {
 		cursor: not-allowed;
 		opacity: 0.666;
 		box-shadow: none;
