@@ -127,7 +127,6 @@
 		transition: box-shadow 150ms ease-in-out, filter 150ms ease-in-out;
 
 		@media (prefers-color-scheme: dark) {
-			color: var(--color-white);
 			background-color: var(--color-purple);
 		}
 	}

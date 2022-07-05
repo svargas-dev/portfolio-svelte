@@ -174,21 +174,13 @@
 	}
 
 	a:focus {
-		outline: 0.2em dashed var(--color-black);
-
-		@media (prefers-color-scheme: dark) {
-			outline: 0.2em dashed var(--color-white);
-		}
+		outline: 0.2em dashed var(--color-foreground);
 
 		@supports selector(:focus-visible) {
 			outline: none;
 
 			&:focus-visible {
-				outline: 0.2em dashed var(--color-black);
-
-				@media (prefers-color-scheme: dark) {
-					outline: 0.2em dashed var(--color-white);
-				}
+				outline: 0.2em dashed var(--color-foreground);
 			}
 		}
 	}
@@ -218,9 +210,8 @@
 		transition: all 300ms ease;
 
 		@media (prefers-color-scheme: dark) {
-			color: var(--color-white);
 			background-color: unset;
-			border-bottom: 0.25em solid var(--color-white);
+			border-bottom: 0.25em solid var(--color-white-alpha);
 		}
 	}
 
@@ -295,12 +286,6 @@
 	.headline h1,
 	.headline h2 {
 		margin: 0;
-		/* fixes weird rendering issues on Safari */
-		box-shadow: 0 0 0 2px var(--color-white);
-
-		@media (prefers-color-scheme: dark) {
-			box-shadow: 0 0 0 2px var(--color-black-mode-bg);
-		}
 	}
 
 	.headline h1 {
@@ -338,11 +323,7 @@
 	/* Mobile + tablet */
 	@media (max-width: 1024px) {
 		.wrapper {
-			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
-
-			@media (prefers-color-scheme: dark) {
-				background: linear-gradient(var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
-			}
+			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-background) 0.5vw);
 		}
 
 		.scroll-to-top {
@@ -381,11 +362,11 @@
 	/* Desktop */
 	@media (min-width: 1025px) {
 		.wrapper {
-			background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
-
-			@media (prefers-color-scheme: dark) {
-				background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
-			}
+			background: linear-gradient(
+				to right,
+				var(--color-orange) 0.5vw,
+				var(--color-background) 0.5vw
+			);
 		}
 
 		.scroll-to-top {

@@ -10,6 +10,15 @@
 	--color-orange-alpha: #f08c6863;
 	--color-purple: #884271;
 	--color-dark-mode-bg: rgb(59, 59, 59);
+
+	/* color themes */
+	--color-foreground: var(--color-black);
+	--color-background: var(--color-white);
+
+	@media (prefers-color-scheme: dark) {
+		--color-foreground: var(--color-white);
+		--color-background: var(--color-black);
+	}
 }
 
 html * {
@@ -29,7 +38,7 @@ body {
 }
 
 body * {
-	color: var(--color-black);
+	color: var(--color-foreground);
 }
 
 h1,
@@ -72,11 +81,7 @@ button:hover {
 
 a:focus,
 button:focus {
-	outline: 0.2em dashed var(--color-black);
-
-	@media (prefers-color-scheme: dark) {
-		outline: 0.2em dashed var(--color-white);
-	}
+	outline: 0.2em dashed var(--color-foreground);
 
 	@supports	selector(:focus-visible) {
 		outline: none;
@@ -100,28 +105,16 @@ button:focus {
 	border: 0;
 }
 
-.bg-white {
-	background-color: var(--color-white);
-}
-
-.bg-black {
-	background-color: var(--color-black);
-}
-
 @media (prefers-color-scheme: dark) {
-	body * {
-		color: var(--color-white);
+	body, a {
+		color: var(--color-foreground);
 	}
 }
 
 .link {
 	text-decoration: none;
 	position: relative;
-	color: var(--color-black);
-
-	@media (prefers-color-scheme: dark) {
-		color: var(--color-white);
-	}
+	color: var(--color-foreground);
 }
 
 .link-underline::before {

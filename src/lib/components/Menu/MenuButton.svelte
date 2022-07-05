@@ -12,7 +12,7 @@
 		if (menuButtonRef) menuButtonRefStore.set(menuButtonRef);
 	}
 
-	$: buttonClass = isOpen ? 'menu-button bg-black menu-button--open' : 'menu-button';
+	$: buttonClass = isOpen ? 'menu-button menu-button--open' : 'menu-button';
 	$: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
 
 	$: menuAtom1 = isOpen ? 'menu-atom menu-cross-1' : 'menu-atom menu-dot menu-dot-1';
@@ -53,31 +53,19 @@
 		border: none;
 		font-weight: 600;
 		font-family: var(--font-sans);
-		color: var(--color-black);
+		color: var(--color-foreground);
 		background-color: transparent;
-
-		@media (prefers-color-scheme: dark) {
-			color: var(--color-white);
-		}
 	}
 
 	.menu-button:focus,
 	.menu-button:active {
-		outline: 0.2em dashed var(--color-black);
-
-		@media (prefers-color-scheme: dark) {
-			outline: 0.2em dashed var(--color-white);
-		}
+		outline: 0.2em dashed var(--color-foreground);
 
 		@supports selector(:focus-visible) {
 			outline: none;
 
 			&:focus-visible {
-				outline: 0.2em dashed var(--color-black);
-
-				@media (prefers-color-scheme: dark) {
-					outline: 0.2em dashed var(--color-white);
-				}
+				outline: 0.2em dashed var(--color-foreground);
 			}
 		}
 	}
@@ -85,11 +73,7 @@
 	.menu-button--open:focus,
 	.menu-button--open:active {
 		transition: none;
-		outline: 0.2em dashed var(--color-white);
-
-		@media (prefers-color-scheme: dark) {
-			outline: 0.2em dashed var(--color-black);
-		}
+		outline: 0.2em dashed var(--color-background);
 
 		@supports selector(:focus-visible) {
 			outline: none;
