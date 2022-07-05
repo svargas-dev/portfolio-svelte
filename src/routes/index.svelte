@@ -153,18 +153,18 @@
 			transition: transform 150ms ease-in-out;
 		}
 
-		@media (max-width: 1024px) {
+		@media (width <= 64rem) {
 			width: 42vw;
 		}
 
-		@media (min-width: 1025px) {
+		@media (width > 64rem) {
 			height: 100vh;
 		}
 
 		/* hide image with Android onscreen keyboard
        as it can make reading the form difficult
     */
-		@media (max-height: 400px) {
+		@media (height < 36rem) {
 			opacity: 0;
 		}
 	}
@@ -311,7 +311,7 @@
 	}
 
 	/* Mobile */
-	@media (max-width: 480px) {
+	@media (width < 30rem) {
 		.about,
 		.contact {
 			grid-column: 2 / 8;
@@ -321,7 +321,7 @@
 	}
 
 	/* Mobile + tablet */
-	@media (max-width: 1024px) {
+	@media (width <= 64rem) {
 		.wrapper {
 			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-background) 0.5vw);
 		}
@@ -338,14 +338,14 @@
 	}
 
 	/* Mobile - android onscreen keyboard fix */
-	@media (max-width: 1024px) and (max-height: 480px) {
+	@media (width <= 64rem) and (height < 25rem) {
 		.scroll-to-top {
 			display: none;
 		}
 	}
 
 	/* Tablets */
-	@media (min-width: 481px) and (max-width: 1024px) {
+	@media (width >= 30rem) and (width <= 64rem) {
 		.headline {
 			grid-column: 4 / 9;
 			grid-row: 4;
@@ -360,7 +360,7 @@
 	}
 
 	/* Desktop */
-	@media (min-width: 1025px) {
+	@media (width > 64rem) {
 		.wrapper {
 			background: linear-gradient(
 				to right,

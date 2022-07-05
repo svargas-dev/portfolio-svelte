@@ -1,4 +1,5 @@
 <footer>
+	<!-- Remix icons -->
 	<a class="link" href="https://github.com/svargas-dev" target="_blank" rel="noopener noreferrer">
 		<span class="sr-only">Github</span>
 		<svg
@@ -76,7 +77,7 @@
 	}
 
 	/* Mobile + tablet */
-	@media (max-width: 1024px) {
+	@media (width <= 64rem) {
 		footer {
 			bottom: 1em;
 			right: 1em;
@@ -84,24 +85,18 @@
 		}
 	}
 	/* Mobile - android onscreen keyboard fix */
-	@media (max-width: 1024px) and (max-height: 480px) {
+	@media (width <= 64rem) and (height < 25rem) {
 		footer {
 			display: none;
 		}
 	}
 
 	/* Desktop */
-	@media (min-width: 1025px) {
+	@media (width > 64rem) {
 		footer {
 			bottom: 2em;
 			right: 2em;
 			width: max-content;
-		}
-	}
-
-	@media (prefers-color-scheme: dark) {
-		a svg {
-			fill: var(--color-white);
 		}
 	}
 </style>

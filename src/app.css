@@ -37,8 +37,13 @@ body {
 	overflow: hidden;
 }
 
-body * {
+body,
+a {
 	color: var(--color-foreground);
+}
+
+svg {
+	fill: var(--color-foreground);
 }
 
 h1,
@@ -83,7 +88,7 @@ a:focus,
 button:focus {
 	outline: 0.2em dashed var(--color-foreground);
 
-	@supports	selector(:focus-visible) {
+	@supports selector(:focus-visible) {
 		outline: none;
 	}
 }
@@ -106,7 +111,8 @@ button:focus {
 }
 
 @media (prefers-color-scheme: dark) {
-	body, a {
+	body,
+	a {
 		color: var(--color-foreground);
 	}
 }
