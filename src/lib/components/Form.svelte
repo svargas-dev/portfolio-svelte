@@ -59,7 +59,7 @@
 		<textarea
 			id="contact-message"
 			name="contact-message"
-			rows="6"
+			rows="4"
 			maxlength="512"
 			required
 			on:change={handleChange}
@@ -90,9 +90,9 @@
 		border: 1px solid var(--color-gray);
 		width: 100%;
 		resize: none;
-		margin: 0.25em 0;
+		margin: 0.2em 0;
 		transition: box-shadow 150ms ease-in-out;
-		padding: 0.25em 0.5em;
+		padding: 0.2em 0.4em;
 
 		@media (prefers-color-scheme: dark) {
 			background-color: var(--color-dark-mode-bg);

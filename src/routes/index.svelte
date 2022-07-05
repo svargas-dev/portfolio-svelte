@@ -157,6 +157,10 @@
 			width: 42vw;
 		}
 
+		@media (width <= 64rem) and (height <= 30rem) {
+			width: 16vw;
+		}
+
 		@media (width > 64rem) {
 			height: 100vh;
 		}
@@ -164,7 +168,7 @@
 		/* hide image with Android onscreen keyboard
        as it can make reading the form difficult
     */
-		@media (height < 36rem) {
+		@media (width <= 30rem) and (height < 38rem) {
 			opacity: 0;
 		}
 	}
@@ -210,6 +214,7 @@
 		transition: all 300ms ease;
 
 		@media (prefers-color-scheme: dark) {
+			color: var(--color-white);
 			background-color: unset;
 			border-bottom: 0.25em solid var(--color-white-alpha);
 		}
@@ -306,8 +311,10 @@
 
 	.about,
 	.contact {
-		position: relative;
-		top: 12.5%;
+		@media (height > 25rem) {
+			position: relative;
+			top: 12.5%;
+		}
 	}
 
 	/* Mobile */

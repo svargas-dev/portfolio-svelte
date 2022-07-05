@@ -38,7 +38,7 @@ body {
 }
 
 body,
-a {
+a, button {
 	color: var(--color-foreground);
 }
 
@@ -58,16 +58,28 @@ h6 {
 /* Fluid typography */
 h1 {
 	font-size: clamp(2em, 0.5em + 3vw, 3.25em);
+
+	@media (orientation: landscape) {
+		font-size: clamp(2em, 0.5em + 1vh, 3.25em);
+	}
 }
 
 h2 {
 	font-size: clamp(1.25em, 0.5em + 2vw, 1.75em);
+
+	@media (orientation: landscape) and (height <= 30rem) {
+		font-size: clamp(1.25em, 0.5em + 1.25vh, 1.75em);
+	}
 }
 
 p,
 button,
 label {
-	font-size: clamp(0.9em, 0.25em + 1.75vw, 1.2em);
+	font-size: clamp(0.9em, 0.25em + 1.75vw, 1.1em);
+
+	@media (orientation: landscape) and (height <= 30rem) {
+		font-size: clamp(0.8em, 0.25em + 1vh, 1.1em);
+	}
 }
 
 label {
