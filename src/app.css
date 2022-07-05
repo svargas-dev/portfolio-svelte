@@ -1,8 +1,3 @@
-@custom-media --motionNotOK (prefers-reduced-motion: reduce);
-@custom-media --motionOK (prefers-reduced-motion: no-preference);
-@custom-media --dark (prefers-color-scheme: dark);
-/* TODO: add breakpoints as custom-media */
-
 :root {
 	--font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
 	--font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
@@ -20,7 +15,7 @@
 html * {
 	box-sizing: border-box;
 
-	@media (--motionOK) {
+	@media (prefers-reduced-motion: no-preference) {
 		scroll-behavior: smooth;
 	}
 }
@@ -79,7 +74,7 @@ a:focus,
 button:focus {
 	outline: 0.2em dashed var(--color-black);
 
-	@media (--dark) {
+	@media (prefers-color-scheme: dark) {
 		outline: 0.2em dashed var(--color-white);
 	}
 
@@ -113,7 +108,7 @@ button:focus {
 	background-color: var(--color-black);
 }
 
-@media (--dark) {
+@media (prefers-color-scheme: dark) {
 	body * {
 		color: var(--color-white);
 	}
@@ -124,7 +119,7 @@ button:focus {
 	position: relative;
 	color: var(--color-black);
 
-	@media (--dark) {
+	@media (prefers-color-scheme: dark) {
 		color: var(--color-white);
 	}
 }

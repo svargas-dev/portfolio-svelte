@@ -94,7 +94,7 @@
 		transition: box-shadow 150ms ease-in-out;
 		padding: 0.25em 0.5em;
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			background-color: var(--color-dark-mode-bg);
 			color: var(--color-white);
 		}
@@ -126,7 +126,7 @@
 		margin-inline: auto;
 		transition: box-shadow 150ms ease-in-out, filter 150ms ease-in-out;
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			color: var(--color-white);
 			background-color: var(--color-purple);
 		}

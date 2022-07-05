@@ -149,7 +149,7 @@
 		bottom: 0;
 		left: 0;
 
-		@media (--motionNotOK) {
+		@media (prefers-reduced-motion: reduce) {
 			transition: transform 150ms ease-in-out;
 		}
 
@@ -176,7 +176,7 @@
 	a:focus {
 		outline: 0.2em dashed var(--color-black);
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			outline: 0.2em dashed var(--color-white);
 		}
 
@@ -186,7 +186,7 @@
 			&:focus-visible {
 				outline: 0.2em dashed var(--color-black);
 
-				@media (--dark) {
+				@media (prefers-color-scheme: dark) {
 					outline: 0.2em dashed var(--color-white);
 				}
 			}
@@ -217,7 +217,7 @@
 		border-bottom: 0.25em solid var(--color-gray);
 		transition: all 300ms ease;
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			color: var(--color-white);
 			background-color: unset;
 			border-bottom: 0.25em solid var(--color-white);
@@ -243,7 +243,7 @@
 		transition: all 150ms ease-in-out;
 		color: var(--color-gray);
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			color: var(--color-white);
 		}
 	}
@@ -268,7 +268,7 @@
 			linear-gradient(to right, transparent calc(100% - 1rem), black calc(100% - 1rem));
 		overscroll-behavior: none;
 
-		@media (--motionOK) {
+		@media (prefers-reduced-motion: no-preference) {
 			scroll-snap-type: y mandatory;
 		}
 	}
@@ -280,7 +280,7 @@
 		grid-template-columns: repeat(8, 1fr);
 		grid-template-rows: repeat(8, 1fr);
 
-		@media (--motionOK) {
+		@media (prefers-reduced-motion: no-preference) {
 			scroll-snap-align: center;
 		}
 	}
@@ -298,7 +298,7 @@
 		/* fixes weird rendering issues on Safari */
 		box-shadow: 0 0 0 2px var(--color-white);
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			box-shadow: 0 0 0 2px var(--color-black-mode-bg);
 		}
 	}
@@ -340,7 +340,7 @@
 		.wrapper {
 			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
 
-			@media (--dark) {
+			@media (prefers-color-scheme: dark) {
 				background: linear-gradient(var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
 			}
 		}
@@ -383,7 +383,7 @@
 		.wrapper {
 			background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-white) 0.5vw);
 
-			@media (--dark) {
+			@media (prefers-color-scheme: dark) {
 				background: linear-gradient(to right, var(--color-orange) 0.5vw, var(--color-black) 0.5vw);
 			}
 		}

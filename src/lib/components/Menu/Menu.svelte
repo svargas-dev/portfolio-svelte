@@ -51,15 +51,15 @@
 		transform: translateX(105vw);
 		opacity: 0;
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			background-color: black;
 		}
 
-		@media (--motionNotOK) {
+		@media (prefers-reduced-motion: reduce) {
 			transition: opacity 200ms ease-in-out;
 		}
 
-		@media (--motionOK) {
+		@media (prefers-reduced-motion: no-preference) {
 			transition: transform 400ms ease-in-out;
 		}
 	}

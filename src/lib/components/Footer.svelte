@@ -99,7 +99,7 @@
 		}
 	}
 
-	@media (--dark) {
+	@media (prefers-color-scheme: dark) {
 		a svg {
 			fill: var(--color-white);
 		}

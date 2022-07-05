@@ -56,7 +56,7 @@
 		color: var(--color-black);
 		background-color: transparent;
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			color: var(--color-white);
 		}
 	}
@@ -65,7 +65,7 @@
 	.menu-button:active {
 		outline: 0.2em dashed var(--color-black);
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			outline: 0.2em dashed var(--color-white);
 		}
 
@@ -75,7 +75,7 @@
 			&:focus-visible {
 				outline: 0.2em dashed var(--color-black);
 
-				@media (--dark) {
+				@media (prefers-color-scheme: dark) {
 					outline: 0.2em dashed var(--color-white);
 				}
 			}
@@ -87,7 +87,7 @@
 		transition: none;
 		outline: 0.2em dashed var(--color-white);
 
-		@media (--dark) {
+		@media (prefers-color-scheme: dark) {
 			outline: 0.2em dashed var(--color-black);
 		}
 
@@ -104,7 +104,7 @@
 		position: absolute;
 		transform: translateX(-3.75em);
 
-		@media (--motionOK) {
+		@media (prefers-reduced-motion: no-preference) {
 			transition: transform 300ms;
 		}
 	}
@@ -133,11 +133,11 @@
 		margin: auto auto;
 		will-change: transform;
 
-		@media (--motionNotOK) {
+		@media (prefers-reduced-motion: reduce) {
 			transition: transform 100ms;
 		}
 
-		@media (--motionOK) {
+		@media (prefers-reduced-motion: no-preference) {
 			transition: transform ease-in 200ms;
 		}
 	}

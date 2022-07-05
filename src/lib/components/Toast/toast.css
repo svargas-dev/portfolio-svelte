@@ -33,12 +33,12 @@
 	will-change: transform;
 	animation: fade-in 0.3s ease, slide-in 0.3s ease, fade-out 0.3s ease var(--_duration);
 
-	@media (--dark) {
+	@media (prefers-color-scheme: dark) {
 		color: white;
 		--_bg-lightness: 20%;
 	}
 
-	@media (--motionOK) {
+	@media (prefers-reduced-motion: no-preference) {
 		--_travel-distance: -5vh;
 	}
 }
