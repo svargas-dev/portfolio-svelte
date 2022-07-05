@@ -2,6 +2,8 @@
 	import Menu from '$lib/components/Menu/Menu.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Toast from '$lib/components/Toast/Toast.svelte';
+	import type { ThemeType } from '$lib/stores/themeStore';
+	import { themeStore } from '$lib/stores/themeStore';
 
 	import '@fontsource/ibm-plex-sans/latin-400.css';
 	import '@fontsource/ibm-plex-sans/latin-500.css';
@@ -19,9 +21,14 @@
 	function hideMenu(): void {
 		isOpen = false;
 	}
+
+	let theme: ThemeType;
+	themeStore.subscribe((value) => {
+		theme = value;
+	});
 </script>
 
-<div>
+<div data-theme={theme}>
 	<Menu {isOpen} {toggleOpen} {hideMenu} />
 	<div aria-hidden={isOpen}>
 		<slot />

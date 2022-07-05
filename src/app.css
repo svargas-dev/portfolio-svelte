@@ -23,6 +23,7 @@
 
 html * {
 	box-sizing: border-box;
+	color: var(--color-foreground);
 
 	@media (prefers-reduced-motion: no-preference) {
 		scroll-behavior: smooth;
@@ -35,11 +36,6 @@ body {
 	min-height: 100vh;
 	font-family: var(--font-sans);
 	overflow: hidden;
-}
-
-body,
-a, button {
-	color: var(--color-foreground);
 }
 
 svg {
@@ -122,13 +118,6 @@ button:focus {
 	border: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-	body,
-	a {
-		color: var(--color-foreground);
-	}
-}
-
 .link {
 	text-decoration: none;
 	position: relative;
@@ -167,4 +156,61 @@ button:focus {
 .link:focus::after {
 	opacity: 1;
 	transform: scaleX(1);
+}
+
+/* Theme overrides from TS */
+[data-theme='light'] {
+	--color-foreground: var(--color-black) !important;
+	--color-background: var(--color-white) !important;
+
+	& * {
+		transition: color 1s ease-in-out, background-color 1s ease-in-out;
+	}
+}
+
+[data-theme='light'] .scroll-to-top {
+	background-color: var(--color-white-alpha) !important;
+	border-bottom: 0.25em solid var(--color-gray) !important;
+}
+
+[data-theme='light'] .scroll-to-top::after {
+	color: var(--color-gray) !important;
+}
+
+[data-theme='light'] input,
+[data-theme='light'] textarea {
+	background-color: white !important;
+	color: var(--color-foreground) !important;
+}
+
+[data-theme='light'] form button {
+	background-color: var(--color-black) !important;
+}
+
+[data-theme='dark'] {
+	--color-foreground: var(--color-white) !important;
+	--color-background: var(--color-black) !important;
+}
+
+[data-theme='dark'] .scroll-to-top {
+	background-color: unset !important;
+	border-bottom: 0.25em solid var(--color-white-alpha) !important;
+}
+
+[data-theme='dark'] .scroll-to-top::after {
+	color: var(--color-white) !important;
+}
+
+[data-theme='dark'] nav {
+	background-color: black !important;
+}
+
+[data-theme='dark'] input,
+[data-theme='dark'] textarea {
+	background-color: var(--color-dark-mode-bg) !important;
+	color: var(--color-white) !important;
+}
+
+[data-theme='dark'] form button {
+	background-color: var(--color-purple) !important;
 }

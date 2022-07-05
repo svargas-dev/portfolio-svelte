@@ -214,7 +214,6 @@
 		transition: all 300ms ease;
 
 		@media (prefers-color-scheme: dark) {
-			color: var(--color-white);
 			background-color: unset;
 			border-bottom: 0.25em solid var(--color-white-alpha);
 		}
