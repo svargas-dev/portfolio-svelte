@@ -16,17 +16,19 @@
 	let themeButtonWrapperEl: HTMLDivElement | null = null;
 	let theme: ThemeType;
 
-	// TODO add local storage for theme
 	onMount(() => {
 		const uaColorScheme = prefersColorScheme();
-		if (uaColorScheme) themeStore.set(uaColorScheme);
+		const lsColorScheme = localStorage.getItem('theme');
+		const themeToSet = (lsColorScheme ?? uaColorScheme) as ThemeType;
+		if (themeToSet) themeStore.set(themeToSet);
 		theme = uaColorScheme;
 	});
 
 	function handleToggleTheme(themeToSet: ThemeType) {
-		if (!themeStore) return;
+		if (!themeToSet) return;
 		themeStore.set(themeToSet);
 		theme = themeToSet;
+		localStorage.setItem('theme', theme);
 	}
 
 	function handleKeydown(e: KeyboardEvent): void {
