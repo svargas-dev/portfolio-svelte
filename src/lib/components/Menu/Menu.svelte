@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import MenuButton from './MenuButton.svelte';
 	import { trapFocus } from '$lib/utils/trapFocus';
 	import type { ThemeType } from '$lib/stores/themeStore';
 	import { themeStore } from '$lib/stores/themeStore';
-	import { prefersColorScheme } from '$lib/utils/mediaQueries';
 	import { supportsCssProperty } from '$lib/utils/supports';
 
 	export let isOpen = false;
@@ -15,13 +13,8 @@
 	let navWrapperEl: HTMLElement | null = null;
 	let themeButtonWrapperEl: HTMLDivElement | null = null;
 	let theme: ThemeType;
-
-	onMount(() => {
-		const uaColorScheme = prefersColorScheme();
-		const lsColorScheme = localStorage.getItem('theme');
-		const themeToSet = (lsColorScheme ?? uaColorScheme) as ThemeType;
-		if (themeToSet) themeStore.set(themeToSet);
-		theme = uaColorScheme;
+	themeStore.subscribe((value) => {
+		theme = value;
 	});
 
 	function handleToggleTheme(themeToSet: ThemeType) {

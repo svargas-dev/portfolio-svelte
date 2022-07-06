@@ -11,8 +11,22 @@
 	import '@fontsource/ibm-plex-serif/latin-700.css';
 	import 'normalize.css';
 	import '../app.css';
+	import { onMount } from 'svelte';
 
 	let isOpen = false;
+	let theme: ThemeType;
+	themeStore.subscribe((value) => {
+		theme = value;
+	});
+
+	onMount(() => {
+		if (document) {
+			const $themeEl = document.getElementById('theme');
+			const theme = $themeEl?.getAttribute('data-theme');
+			console.log(theme);
+			if (theme) themeStore.set(theme as ThemeType);
+		}
+	});
 
 	function toggleOpen(): void {
 		isOpen = !isOpen;
@@ -21,11 +35,6 @@
 	function hideMenu(): void {
 		isOpen = false;
 	}
-
-	let theme: ThemeType;
-	themeStore.subscribe((value) => {
-		theme = value;
-	});
 </script>
 
 <div data-theme={theme}>

@@ -158,58 +158,71 @@ button:focus {
 }
 
 /* Theme overrides from TS */
+[data-theme='light'] ~ body,
 [data-theme='light'] {
 	--color-foreground: var(--color-black) !important;
 	--color-background: var(--color-white) !important;
 
 	& * {
-		transition: color 1s ease-in-out, background-color 1s ease-in-out;
+		transition: color 0.1s ease-in-out, background 0.1s ease-in-out;
 	}
 }
 
+[data-theme='light'] ~ body .scroll-to-top,
 [data-theme='light'] .scroll-to-top {
 	background-color: var(--color-white-alpha) !important;
 	border-bottom: 0.25em solid var(--color-gray) !important;
 }
 
+[data-theme='light'] ~ body .scroll-to-top::after,
 [data-theme='light'] .scroll-to-top::after {
 	color: var(--color-gray) !important;
 }
 
+[data-theme='light'] ~ body input,
+[data-theme='light'] ~ textarea input,
 [data-theme='light'] input,
 [data-theme='light'] textarea {
 	background-color: white !important;
 	color: var(--color-foreground) !important;
 }
 
+[data-theme='light'] ~ body form button,
 [data-theme='light'] form button {
 	background-color: var(--color-black) !important;
 }
 
+[data-theme='dark'] ~ body,
 [data-theme='dark'] {
 	--color-foreground: var(--color-white) !important;
 	--color-background: var(--color-black) !important;
 }
 
+[data-theme='dark'] ~ body .scroll-to-top,
 [data-theme='dark'] .scroll-to-top {
 	background-color: unset !important;
 	border-bottom: 0.25em solid var(--color-white-alpha) !important;
 }
 
+[data-theme='dark'] ~ body .scroll-to-top::after,
 [data-theme='dark'] .scroll-to-top::after {
 	color: var(--color-white) !important;
 }
 
+[data-theme='dark'] ~ body nav,
 [data-theme='dark'] nav {
 	background-color: black !important;
 }
 
+[data-theme='dark'] ~ body input,
+[data-theme='dark'] ~ body textarea,
 [data-theme='dark'] input,
 [data-theme='dark'] textarea {
 	background-color: var(--color-gray) !important;
 	color: var(--color-white) !important;
 }
 
+[data-theme='dark'] ~ body form button,
 [data-theme='dark'] form button {
 	background-color: var(--color-purple) !important;
 }
