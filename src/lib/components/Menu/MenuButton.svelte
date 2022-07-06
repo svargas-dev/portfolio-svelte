@@ -151,11 +151,11 @@
 
 	.menu-cross-1 {
 		border-radius: 0;
-		transform: rotate(45deg) scaleX(4);
+		transform: rotate(45deg) scale(4, 0.8);
 	}
 
 	.menu-cross-2 {
 		border-radius: 0;
-		transform: rotate(-45deg) scaleX(4);
+		transform: rotate(-45deg) scale(4, 0.8);
 	}
 </style>

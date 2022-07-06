@@ -38,8 +38,8 @@
 		isOpen
 	) {
 		const innerHeight = window.innerHeight;
-		if (themeButtonWrapperEl.style.bottom !== `calc(100% - ${innerHeight}px + 1em)`) {
-			themeButtonWrapperEl.style.bottom = `calc(100% - ${innerHeight}px + 1em)`;
+		if (themeButtonWrapperEl.style.bottom !== `calc(100% - ${innerHeight}px + 2rem)`) {
+			themeButtonWrapperEl.style.bottom = `calc(100% - ${innerHeight}px + 2em)`;
 		}
 	}
 </script>
@@ -182,7 +182,7 @@
 		height: 2em;
 		position: absolute;
 		bottom: 2rem;
-		right: 1.25rem;
+		right: 1.5rem;
 		padding: 0;
 		margin: 0;
 	}

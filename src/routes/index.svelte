@@ -8,9 +8,9 @@
 
 	export const prerender = true;
 
-	let mainEl: HTMLElement;
-	let observedEl: HTMLElement;
-	let imageEl: HTMLElement;
+	let mainEl: HTMLElement | null = null;
+	let observedEl: HTMLElement | null = null;
+	let imageWrapperEl: HTMLElement | null = null;
 	let showScrollToTop = false;
 
 	onMount(() => {
@@ -19,7 +19,8 @@
 			rootMargin: '0px',
 			threshold: buildThresholdList(32)
 		};
-		observeIntersection(observedEl, effectsOnIntersectionEvent(imageEl), options);
+		if (observedEl && imageWrapperEl)
+			observeIntersection(observedEl, effectsOnIntersectionEvent(imageWrapperEl), options);
 	});
 
 	// SvelteKit's eslint config fails as return type is not available in SSR...
@@ -35,12 +36,12 @@
 					elementToModify.style.filter = `grayscale(${1 - entry.intersectionRatio})`;
 				}
 
-				if (reduceMotion && elementToModify && entry.intersectionRatio < 0.3) {
+				if (reduceMotion && elementToModify && entry.intersectionRatio < 0.5) {
 					elementToModify.style.transform = `scale(0.618)`;
 					elementToModify.style.filter = `grayscale(0.618)`;
 				}
 
-				if (reduceMotion && elementToModify && entry.intersectionRatio >= 0.3) {
+				if (reduceMotion && elementToModify && entry.intersectionRatio >= 0.5) {
 					elementToModify.style.transform = `scale(1)`;
 					elementToModify.style.filter = `grayscale(0)`;
 				}
@@ -57,21 +58,28 @@
 		};
 	}
 
+	// Move focus to menu button when using scroll up button
 	let menuButtonRef: HTMLButtonElement | null;
 	menuButtonRefStore.subscribe((value) => {
 		menuButtonRef = value;
 	});
 
 	function scrollToTop(): void {
-		if (typeof mainEl === 'undefined' || menuButtonRef === null) return;
+		if (mainEl === null || menuButtonRef === null) return;
 
 		mainEl.scrollTo(0, 0);
 		menuButtonRef.focus();
 	}
+
+	// weird hack for onload events not firing reliably. not sure if it's a SvelteKit bug
+	$: if (imageWrapperEl) {
+		const imgEl = imageWrapperEl.children[0].children[2] as HTMLImageElement;
+		imgEl.classList.add('img-loaded');
+	}
 </script>
 
 <div class="wrapper">
-	<div bind:this={imageEl} class="image-wrapper">
+	<div bind:this={imageWrapperEl} class="image-wrapper">
 		<picture>
 			<source
 				srcset="image/sam-vargas-480.webp 400w, image/sam-vargas-900.webp 800w, image/sam-vargas-1200.webp 1067w"
@@ -81,7 +89,7 @@
 				srcset="image/sam-vargas-480.png 400w, image/sam-vargas-900.png 800w, image/sam-vargas-1200.png 1067w"
 				type="image/png"
 			/>
-			<img class="img--sam-vargas" src="image/sam-vargas-900.png" alt="Sam Vargas" />
+			<img src="image/sam-vargas-900.png" alt="Sam Vargas" />
 		</picture>
 	</div>
 
@@ -144,17 +152,19 @@
 	.image-wrapper picture img {
 		margin: 0;
 		padding: 0;
-		opacity: 1;
-		transform-origin: bottom left;
-		will-change: transform;
-		transition: transform 150ms linear, filter 150ms linear;
-		position: fixed;
 		bottom: 0;
 		left: 0;
+		transform-origin: bottom left;
+		border: 0;
+		outline: none;
+		border-image-width: 0;
+	}
 
-		@media (prefers-reduced-motion: reduce) {
-			transition: transform 150ms ease-in-out;
-		}
+	.image-wrapper {
+		position: fixed;
+		width: max-content;
+		height: max-content;
+		transition: transform 0.15s linear, filter 0.5s linear;
 
 		@media (width <= 64rem) {
 			width: 42vw;
@@ -173,6 +183,38 @@
     */
 		@media (width <= 30rem) and (height < 38rem) {
 			opacity: 0;
+		}
+	}
+
+	.image-wrapper img {
+		display: block;
+		transform-origin: bottom left;
+		will-change: transform;
+		transition: transform 0.3s linear, filter 0.5s linear, opacity 0.5s linear;
+		opacity: 0;
+		filter: blur(5px) grayscale(1);
+		max-width: 100%;
+		max-height: 100%;
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: transform 150ms ease-in-out;
+		}
+	}
+
+	.image-wrapper::after {
+		content: '';
+		position: absolute;
+		z-index: 100;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: no-repeat bottom left / 100% url('/image/sam-outline-black.svg');
+
+		@media (prefers-color-scheme: dark) {
+			background: no-repeat bottom left / 100% url('/image/sam-outline-white.svg');
 		}
 	}
 
@@ -393,6 +435,15 @@
 		.about,
 		.contact {
 			grid-column: 4 / 8;
+			grid-row: 1 / 7;
+		}
+	}
+
+	/* Big screens! */
+	@media (width > 64rem) {
+		.about,
+		.contact {
+			grid-column: 4 / 6;
 			grid-row: 1 / 7;
 		}
 	}

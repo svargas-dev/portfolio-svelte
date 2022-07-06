@@ -1,10 +1,15 @@
 :root {
 	--font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
 	--font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
+	/* Thanks goes to https://www.fluid-type-scale.com/ */
+	--font-size-base: clamp(0.9rem, 0.3vw + 0.8rem, 1.19rem);
+	--font-size-lg: clamp(1.5rem, 0.9vw + 1.3rem, 2.11rem);
+	--font-size-xl: clamp(1.95rem, 1.49vw + 1.62rem, 2.81rem);
+
 	--color-white: #f0eeed;
 	--color-white-alpha: rgba(240 238 237 /0.7);
 	--color-black: #0f1112;
-	--color-dark-gray: #0f11123d;
+	--color-dark-gray: #0f11121c;
 	--color-green: #b7d6c5;
 	--color-orange: #f08c68;
 	--color-orange-alpha: #f08c6863;
@@ -52,29 +57,17 @@ h6 {
 
 /* Fluid typography */
 h1 {
-	font-size: clamp(2em, 0.5em + 3vw, 3.25em);
-
-	@media (orientation: landscape) {
-		font-size: clamp(2em, 0.5em + 1vh, 3.25em);
-	}
+	font-size: var(--font-size-xl);
 }
 
 h2 {
-	font-size: clamp(1.25em, 0.5em + 2vw, 1.75em);
-
-	@media (orientation: landscape) and (height <= 30rem) {
-		font-size: clamp(1.25em, 0.5em + 1.25vh, 1.75em);
-	}
+	font-size: var(--font-size-lg);
 }
 
 p,
 button,
 label {
-	font-size: clamp(0.9em, 0.25em + 1.75vw, 1.1em);
-
-	@media (orientation: landscape) and (height <= 30rem) {
-		font-size: clamp(0.8em, 0.25em + 1vh, 1.1em);
-	}
+	font-size: var(--font-size-base);
 }
 
 label {
@@ -191,6 +184,10 @@ button:focus {
 	background-color: var(--color-black) !important;
 }
 
+[data-theme='light'] .image-wrapper::after {
+	background: no-repeat bottom left / 100% url('/image/sam-outline-black.svg') !important;
+}
+
 [data-theme='dark'] {
 	--color-foreground: var(--color-white) !important;
 	--color-background: var(--color-black) !important;
@@ -222,4 +219,14 @@ button:focus {
 
 [data-theme='dark'] form button {
 	background-color: var(--color-purple) !important;
+}
+
+[data-theme='dark'] .image-wrapper::after {
+	background: no-repeat bottom left / 100% url('/image/sam-outline-white.svg') !important;
+}
+
+/* Due to Svelte's isolated CSS these go here for image loading */
+.img-loaded {
+	filter: initial !important;
+	opacity: 1 !important;
 }
