@@ -4,12 +4,12 @@
 	--color-white: #f0eeed;
 	--color-white-alpha: rgba(240 238 237 /0.7);
 	--color-black: #0f1112;
-	--color-gray: #0f11123d;
+	--color-dark-gray: #0f11123d;
 	--color-green: #b7d6c5;
 	--color-orange: #f08c68;
 	--color-orange-alpha: #f08c6863;
 	--color-purple: #884271;
-	--color-dark-mode-bg: rgb(59, 59, 59);
+	--color-gray: rgb(59, 59, 59);
 
 	/* color themes */
 	--color-foreground: var(--color-black);
@@ -17,7 +17,7 @@
 
 	@media (prefers-color-scheme: dark) {
 		--color-foreground: var(--color-white);
-		--color-background: var(--color-black);
+		--color-background: var(--color-dark-gray);
 	}
 }
 
@@ -33,7 +33,6 @@ html * {
 body {
 	width: 100vw;
 	height: 100vh;
-	min-height: 100vh;
 	font-family: var(--font-sans);
 	overflow: hidden;
 }
@@ -207,7 +206,7 @@ button:focus {
 
 [data-theme='dark'] input,
 [data-theme='dark'] textarea {
-	background-color: var(--color-dark-mode-bg) !important;
+	background-color: var(--color-gray) !important;
 	color: var(--color-white) !important;
 }
 

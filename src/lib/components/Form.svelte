@@ -95,7 +95,7 @@
 		padding: 0.2em 0.4em;
 
 		@media (prefers-color-scheme: dark) {
-			background-color: var(--color-dark-mode-bg);
+			background-color: var(--color-gray);
 			color: var(--color-white);
 		}
 	}

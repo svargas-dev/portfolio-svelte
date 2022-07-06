@@ -22,6 +22,9 @@
 		observeIntersection(observedEl, effectsOnIntersectionEvent(imageEl), options);
 	});
 
+	// SvelteKit's eslint config fails as return type is not available in SSR...
+	// It's not smart enough to realise this is only ever run on the client
+	// eslint-disable-next-line
 	function effectsOnIntersectionEvent(elementToModify: HTMLElement): IntersectionObserverCallback {
 		return function (entries, _observer) {
 			entries.forEach((entry) => {
