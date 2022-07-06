@@ -18,10 +18,8 @@ const lsColorScheme = localStorage.getItem('theme');
 const themeToSet = lsColorScheme ?? uaColorScheme;
 if (document && themeToSet) {
 	// since our Svelte app hasn't rendered yet it has to go outside of the #svelte root
-	// SvelteKit sadly seems to cause a rerender of the entire body erasing attributes
-	// so I'm creating a new element as a sibling to the body
-	const themeEl = document.createElement('div');
-	themeEl.setAttribute('id', 'theme');
-	themeEl.setAttribute('data-theme', themeToSet);
-	document.childNodes[1].appendChild(themeEl);
+	// SvelteKit sadly recreates the entire body erasing attributes
+	// so I'm adding the attribute to the html tag itself
+	const html = document.querySelector('html');
+	if (html) html.setAttribute('data-theme', themeToSet);
 }

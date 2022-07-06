@@ -22,6 +22,7 @@
 		themeStore.set(themeToSet);
 		theme = themeToSet;
 		localStorage.setItem('theme', theme);
+		document.querySelector('html')?.setAttribute('data-theme', theme);
 	}
 
 	function handleKeydown(e: KeyboardEvent): void {

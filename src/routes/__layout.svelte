@@ -21,9 +21,7 @@
 
 	onMount(() => {
 		if (document) {
-			const $themeEl = document.getElementById('theme');
-			const theme = $themeEl?.getAttribute('data-theme');
-			console.log(theme);
+			const theme = document.querySelector('html')?.getAttribute('data-theme');
 			if (theme) themeStore.set(theme as ThemeType);
 		}
 	});
