@@ -176,6 +176,11 @@ button:focus {
 	color: var(--color-gray) !important;
 }
 
+[data-theme='light'] nav .light {
+	visibility: hidden;
+	opacity: 0;
+}
+
 [data-theme='light'] input,
 [data-theme='light'] textarea {
 	background-color: white !important;
@@ -202,6 +207,11 @@ button:focus {
 
 [data-theme='dark'] nav {
 	background-color: black !important;
+}
+
+[data-theme='dark'] nav .dark {
+	visibility: hidden;
+	opacity: 0;
 }
 
 [data-theme='dark'] input,

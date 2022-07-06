@@ -2,8 +2,6 @@
 	import Menu from '$lib/components/Menu/Menu.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Toast from '$lib/components/Toast/Toast.svelte';
-	import type { ThemeType } from '$lib/stores/themeStore';
-	import { themeStore } from '$lib/stores/themeStore';
 
 	import '@fontsource/ibm-plex-sans/latin-400.css';
 	import '@fontsource/ibm-plex-sans/latin-500.css';
@@ -11,20 +9,8 @@
 	import '@fontsource/ibm-plex-serif/latin-700.css';
 	import 'normalize.css';
 	import '../app.css';
-	import { onMount } from 'svelte';
 
 	let isOpen = false;
-	let theme: ThemeType;
-	themeStore.subscribe((value) => {
-		theme = value;
-	});
-
-	onMount(() => {
-		if (document) {
-			const theme = document.querySelector('html')?.getAttribute('data-theme');
-			if (theme) themeStore.set(theme as ThemeType);
-		}
-	});
 
 	function toggleOpen(): void {
 		isOpen = !isOpen;
@@ -35,7 +21,7 @@
 	}
 </script>
 
-<div data-theme={theme}>
+<div>
 	<Menu {isOpen} {toggleOpen} {hideMenu} />
 	<div aria-hidden={isOpen}>
 		<slot />
