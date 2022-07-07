@@ -9,11 +9,13 @@
 	--color-white: #f0eeed;
 	--color-white-alpha: rgba(240 238 237 /0.7);
 	--color-black: #0f1112;
-	--color-dark-gray: #0f11121c;
+	--color-dark-gray: #1d22241c;
 	--color-green: #b7d6c5;
 	--color-orange: #f08c68;
+	--color-dark-orange: #ea5c29;
 	--color-orange-alpha: #f08c6863;
 	--color-purple: #884271;
+	--color-dark-purple: #6d355a;
 	--color-gray: rgb(59, 59, 59);
 
 	/* color themes */
@@ -218,7 +220,7 @@ button:focus {
 }
 
 [data-theme='dark'] form button {
-	background-color: var(--color-purple) !important;
+	background-color: var(--color-dark-purple) !important;
 }
 
 [data-theme='dark'] .image-wrapper::after {

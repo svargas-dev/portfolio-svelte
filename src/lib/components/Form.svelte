@@ -94,6 +94,11 @@
 		transition: box-shadow 150ms ease-in-out;
 		padding: 0.2em 0.4em;
 
+		@media (height < 25rem) {
+			padding: 0.1em 0.2em;
+			/* background-color: red !important; */
+		}
+
 		@media (prefers-color-scheme: dark) {
 			background-color: var(--color-gray);
 			color: var(--color-white);
@@ -124,15 +129,15 @@
 		background-color: var(--color-black);
 		color: var(--color-white);
 		margin-inline: auto;
-		transition: box-shadow 150ms ease-in-out, filter 150ms ease-in-out;
+		transition: filter 300ms ease-in-out;
 
 		@media (prefers-color-scheme: dark) {
-			background-color: var(--color-purple);
+			background-color: var(--color-dark-purple);
 		}
 	}
 
 	button:hover {
-		filter: contrast(1.2) opacity(0.9);
+		filter: contrast(2);
 	}
 
 	button:disabled {

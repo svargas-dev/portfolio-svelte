@@ -1,21 +1,13 @@
 <script lang="ts">
 	import MenuButton from './MenuButton.svelte';
 	import { trapFocus } from '$lib/utils/trapFocus';
-	import { supportsCssProperty } from '$lib/utils/supports';
+	import ThemeButton from './ThemeButton.svelte';
 
 	export let isOpen = false;
 	export let toggleOpen: () => void;
 	export let hideMenu: () => void;
 
 	let navWrapperEl: HTMLElement | null = null;
-	let themeButtonWrapperEl: HTMLDivElement | null = null;
-
-	type ThemeType = 'light' | 'dark' | undefined;
-	function handleToggleTheme(theme: ThemeType) {
-		if (!theme) return;
-		document.querySelector('html')?.setAttribute('data-theme', theme);
-		localStorage.setItem('theme', theme);
-	}
 
 	function handleKeydown(e: KeyboardEvent): void {
 		if (e.key === 'Escape') hideMenu();
@@ -27,80 +19,35 @@
 		if (!isOpen && trapFocusCleanup) trapFocusCleanup();
 	}
 
-	$: navClass = isOpen ? 'nav--open' : '';
-
-	// getting around the mobile height problem
-	// to keep switch theme button in bottom right on all devices
-	$: if (
-		typeof window !== 'undefined' &&
-		!supportsCssProperty('height', '100dvh') &&
-		themeButtonWrapperEl &&
-		isOpen
-	) {
-		const innerHeight = window.innerHeight;
-		if (themeButtonWrapperEl.style.bottom !== `calc(100% - ${innerHeight}px + 2rem)`) {
-			themeButtonWrapperEl.style.bottom = `calc(100% - ${innerHeight}px + 2em)`;
-		}
-	}
+	$: asideClass = isOpen ? 'aside--open' : '';
 </script>
+
+<MenuButton {isOpen} {toggleOpen} />
 
 <aside
 	bind:this={navWrapperEl}
+	class={asideClass}
 	on:click={toggleOpen}
 	on:keydown={isOpen ? handleKeydown : undefined}
+	aria-hidden={!isOpen}
 >
-	<MenuButton {isOpen} />
+	<nav on:click|stopPropagation>
+		<a on:click={toggleOpen} href="#about" tabindex={isOpen ? 0 : -1}>About</a>
+		<a on:click={toggleOpen} href="#contact" tabindex={isOpen ? 0 : -1}> Contact</a>
 
-	<nav class={navClass} aria-hidden={!isOpen}>
-		<a href="#about" tabindex={isOpen ? 0 : -1}>About</a>
-		<a href="#contact" tabindex={isOpen ? 0 : -1}> Contact</a>
-
-		<div bind:this={themeButtonWrapperEl} class="theme-button">
-			<button on:click|stopPropagation={() => handleToggleTheme('dark')} class="dark">
-				<span class="sr-only">Change to dark theme</span>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
-					><path fill="none" d="M0 0h24v24H0z" /><path
-						d="M11.38 2.019a7.5 7.5 0 1 0 10.6 10.6C21.662 17.854 17.316 22 12.001 22 6.477 22 2 17.523 2 12c0-5.315 4.146-9.661 9.38-9.981z"
-					/></svg
-				>
-			</button>
-			<button on:click|stopPropagation={() => handleToggleTheme('light')} class="light">
-				<span class="sr-only">Change to light theme</span>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
-					><path fill="none" d="M0 0h24v24H0z" /><path
-						d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"
-					/></svg
-				>
-			</button>
-		</div>
+		<ThemeButton {isOpen} />
 	</nav>
 </aside>
 
 <style lang="postcss">
-	nav {
+	aside {
 		position: absolute;
 		z-index: 1;
 		top: 0;
 		right: 0;
-		margin-left: auto;
-		width: clamp(15em, 20vw, 360px);
 		height: 100%;
-		max-height: -webkit-fill-available;
-		background-color: var(--color-black);
-		display: flex;
-		flex-direction: column;
-		padding-inline: 3em;
-		padding-block: 9em;
-		transform: translateX(105vw);
 		opacity: 0;
-
-		@supports (height: 100dvh) {
-			height: 100dvh;
-		}
-
-		@media (prefers-color-scheme: dark) {
-			background-color: black;
-		}
+		transform: translateX(105vw);
 
 		@media (prefers-reduced-motion: reduce) {
 			transition: opacity 200ms ease-in-out;
@@ -109,30 +56,50 @@
 		@media (prefers-reduced-motion: no-preference) {
 			transition: transform 400ms ease-in-out;
 		}
+
+		/**
+    * Clicking outside of visible navbar closes sidebar
+    */
+		&::before {
+			content: '';
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			right: 0;
+			background-color: transparent;
+		}
 	}
 
-	/**
-  * Clicking outside of visible navbar closes sidebar
-  */
-	nav::before {
-		content: '';
-		width: 100vw;
-		height: 100vh;
-		position: absolute;
-		z-index: -1;
-		top: 0;
-		right: 0;
-		background-color: transparent;
-	}
-
-	.nav--open {
+	.aside--open {
 		transform: translateX(0);
 		opacity: 1;
 	}
 
-	.nav--open::before {
+	.aside--open::before {
 		background-color: rgba(0, 0, 0, 0.1);
 		transition: background-color ease-in-out 300ms 300ms;
+	}
+
+	nav {
+		position: relative;
+		width: clamp(15em, 20vw, 360px);
+		height: 100%;
+		max-height: -webkit-fill-available;
+		background-color: var(--color-black);
+		display: flex;
+		flex-direction: column;
+		padding-inline: 3em;
+		padding-block: 9em;
+
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			background-color: black;
+		}
 	}
 
 	a {
@@ -175,46 +142,5 @@
 	a:focus::after {
 		opacity: 1;
 		transform: scaleY(1);
-	}
-
-	.theme-button {
-		width: 2em;
-		height: 2em;
-		position: absolute;
-		bottom: 2rem;
-		right: 1.5rem;
-		padding: 0;
-		margin: 0;
-	}
-
-	button {
-		position: absolute;
-		padding: 0.5em;
-		margin: 0;
-		border: none;
-		fill: var(--color-white);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		transition: visibility 250ms ease, opacity 250ms ease;
-	}
-
-	button:focus,
-	button:active {
-		outline: 2px solid transparent;
-		outline-offset: 2px;
-		box-shadow: 0 0 0 0.2em var(--color-green);
-	}
-
-	.light {
-		background-color: var(--color-orange);
-	}
-
-	.dark {
-		background-color: var(--color-purple);
-	}
-
-	button svg {
-		fill: var(--color-white);
 	}
 </style>

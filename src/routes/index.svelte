@@ -148,23 +148,20 @@
 	}
 
 	.image-wrapper,
-	.image-wrapper picture,
-	.image-wrapper picture img {
-		margin: 0;
-		padding: 0;
-		bottom: 0;
-		left: 0;
+	.image-wrapper img {
 		transform-origin: bottom left;
-		border: 0;
-		outline: none;
-		border-image-width: 0;
 	}
 
 	.image-wrapper {
 		position: fixed;
+		margin: 0;
+		padding: 0;
+		bottom: 0;
+		left: 0;
 		width: max-content;
 		height: max-content;
 		transition: transform 0.15s linear, filter 0.5s linear;
+		will-change: transform;
 
 		@media (width <= 64rem) {
 			width: 42vw;
@@ -188,9 +185,7 @@
 
 	.image-wrapper img {
 		display: block;
-		transform-origin: bottom left;
-		will-change: transform;
-		transition: transform 0.3s linear, filter 0.5s linear, opacity 0.5s linear;
+		transition: filter 0.5s linear, opacity 0.5s linear;
 		opacity: 0;
 		filter: blur(5px) grayscale(1);
 		max-width: 100%;
@@ -355,7 +350,7 @@
 
 	.about,
 	.contact {
-		@media (height > 25rem) {
+		@media (height > 24rem) {
 			position: relative;
 			top: 12.5%;
 		}
@@ -386,6 +381,12 @@
 			grid-column: 3 / 7;
 			grid-row: 4;
 		}
+
+		.about h2,
+		.contact h2 {
+			margin-block-start: 0;
+			margin-block-end: 0.2em;
+		}
 	}
 
 	/* Mobile - android onscreen keyboard fix */
@@ -396,7 +397,7 @@
 	}
 
 	/* Tablets */
-	@media (width >= 30rem) and (width <= 64rem) {
+	@media (30rem <= width <= 64rem) {
 		.headline {
 			grid-column: 4 / 9;
 			grid-row: 4;
@@ -411,7 +412,7 @@
 	}
 
 	/* Desktop */
-	@media (width > 64rem) {
+	@media (64rem < width <= 86rem) {
 		.wrapper {
 			background: linear-gradient(
 				to right,
@@ -440,7 +441,7 @@
 	}
 
 	/* Big screens! */
-	@media (width > 64rem) {
+	@media (width > 86rem) {
 		.about,
 		.contact {
 			grid-column: 4 / 6;

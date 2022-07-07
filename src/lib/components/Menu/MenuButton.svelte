@@ -6,6 +6,7 @@
 	import { menuButtonRefStore } from '$lib/stores/menuStore';
 
 	export let isOpen: boolean;
+	export let toggleOpen: () => void;
 
 	let menuButtonRef: HTMLButtonElement | null;
 	$: {
@@ -15,13 +16,11 @@
 	$: buttonClass = isOpen ? 'menu-button menu-button--open' : 'menu-button';
 	$: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
 
-	$: menuAtom1 = isOpen ? 'menu-atom menu-cross-1' : 'menu-atom menu-dot menu-dot-1';
-	$: menuAtom2 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-2';
-	$: menuAtom3 = isOpen ? 'd-none' : 'menu-atom menu-dot menu-dot-3';
-	$: menuAtom4 = isOpen ? 'menu-atom menu-cross-2' : 'menu-atom menu-dot menu-dot-4';
+	$: menuClass = isOpen ? 'v-hidden' : 'menu-icon';
+	$: closeClass = isOpen ? 'close-icon' : 'v-hidden';
 </script>
 
-<button bind:this={menuButtonRef} class={buttonClass}>
+<button bind:this={menuButtonRef} class={buttonClass} on:click={toggleOpen}>
 	<div class={buttonTextClass} role="status" aria-live="polite">
 		{#if !isOpen}
 			<span transition:fade>MENU</span>
@@ -32,11 +31,15 @@
 		{/if}
 	</div>
 
-	<div class="menu-icon" aria-hidden={true}>
-		<div class={menuAtom1} />
-		<div class={menuAtom2} />
-		<div class={menuAtom3} />
-		<div class={menuAtom4} />
+	<div class={menuClass} aria-hidden>
+		<div class="menu-atom menu-dot menu-dot-1" />
+		<div class="menu-atom menu-dot menu-dot-2" />
+		<div class="menu-atom menu-dot menu-dot-3" />
+		<div class="menu-atom menu-dot menu-dot-4" />
+	</div>
+	<div class={closeClass} aria-hidden>
+		<div />
+		<div />
 	</div>
 </button>
 
@@ -97,11 +100,15 @@
 		transform: translateX(50vw);
 	}
 
-	.menu-icon {
+	.menu-icon,
+	.close-icon {
 		width: 3em;
 		height: 3em;
 		position: absolute;
 		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.menu-atom {
@@ -116,17 +123,14 @@
 		left: 0;
 		margin: auto auto;
 		will-change: transform;
-
-		@media (prefers-reduced-motion: reduce) {
-			transition: transform 100ms;
-		}
+		transition: transform 100ms;
 
 		@media (prefers-reduced-motion: no-preference) {
 			transition: transform ease-in 200ms;
 		}
 	}
 
-	.d-none {
+	.v-hidden {
 		content-visibility: hidden;
 	}
 
@@ -145,17 +149,33 @@
 	.menu-dot-4 {
 		transform: translateX(0.75em);
 	}
+
 	.menu-button:hover .menu-dot {
 		transform: translate(0, 0);
 	}
 
-	.menu-cross-1 {
-		border-radius: 0;
-		transform: rotate(45deg) scale(4, 0.8);
+	.close-icon div {
+		width: 2em;
+		height: 0.5em;
+		position: absolute;
+		background-color: var(--color-green);
+		transition: transform 100ms;
+
+		@media (prefers-reduced-motion: no-preference) {
+			transition: transform ease-in 200ms;
+		}
 	}
 
-	.menu-cross-2 {
-		border-radius: 0;
-		transform: rotate(-45deg) scale(4, 0.8);
+	.close-icon div:nth-child(odd) {
+		transform: rotate(45deg);
+	}
+
+	.close-icon div:nth-child(even) {
+		transform: rotate(-45deg);
+	}
+
+	.menu-button:hover .close-icon div {
+		transform: scaleX(0.25);
+		border-radius: 100%;
 	}
 </style>
