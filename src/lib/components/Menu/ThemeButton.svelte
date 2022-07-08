@@ -28,7 +28,7 @@
 </script>
 
 <div bind:this={themeButtonWrapperEl} class="theme-button">
-	<button on:click={() => handleToggleTheme('dark')} class="dark">
+	<button on:click={() => handleToggleTheme('dark')} class="dark dark-bg">
 		<span class="sr-only">Change to dark theme</span>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
 			><path fill="none" d="M0 0h24v24H0z" /><path
@@ -36,7 +36,7 @@
 			/></svg
 		>
 	</button>
-	<button on:click={() => handleToggleTheme('light')} class="light">
+	<button on:click={() => handleToggleTheme('light')} class="light light-bg">
 		<span class="sr-only">Change to light theme</span>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em">
 			<path fill="none" d="M0 0h24v24H0z" /><path
@@ -76,11 +76,11 @@
 		box-shadow: 0 0 0 0.2em var(--color-green);
 	}
 
-	.light {
+	.light-bg {
 		background-color: var(--color-dark-orange);
 	}
 
-	.dark {
+	.dark-bg {
 		background-color: var(--color-dark-purple);
 	}
 

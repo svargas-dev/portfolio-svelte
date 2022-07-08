@@ -75,6 +75,8 @@
 	form {
 		display: flex;
 		flex-direction: column;
+		/* background: purple; */
+		padding-block-end: 6em;
 	}
 
 	label {
@@ -96,7 +98,6 @@
 
 		@media (height < 25rem) {
 			padding: 0.1em 0.2em;
-			/* background-color: red !important; */
 		}
 
 		@media (prefers-color-scheme: dark) {

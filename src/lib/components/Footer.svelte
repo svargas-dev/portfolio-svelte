@@ -85,7 +85,7 @@
 		}
 	}
 	/* Mobile - android onscreen keyboard fix */
-	@media (width <= 64rem) and (height < 25rem) {
+	@media (width <= 30rem) and (height < 25rem) {
 		footer {
 			display: none;
 		}

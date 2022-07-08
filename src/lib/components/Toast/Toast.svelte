@@ -4,6 +4,7 @@
 	 * https://github.com/argyleink/gui-challenges/tree/main/toast
 	 */
 	import { toastStore } from '$lib/stores/toastStore';
+	import { prefersReducedMotion } from '$lib/utils/mediaQueries';
 	import './toast.css';
 
 	let toasts: string[];
@@ -26,13 +27,13 @@
 	const addToast = (toast: HTMLOutputElement): void => {
 		if (!toasterEl || typeof window === 'undefined') return;
 
-		const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+		const motionOK = !prefersReducedMotion();
 		toasterEl.children.length && motionOK ? flipToast(toast) : toasterEl.prepend(toast);
 	};
 
 	/**
-	 * I could, of course, have used Svelte animations inside
-	 * conditional statements but wanted to play with the FLIP concept
+	 * I could, of course, have used Svelte animations
+	 * but wanted to play with FLIP animations
 	 *
 	 * https://aerotwist.com/blog/flip-your-animations/
 	 */
@@ -73,6 +74,7 @@
 		/**
 		 * So we know when animations are complete and toast has been removed from the DOM
 		 */
+		// eslint-disable-next-line no-async-promise-executor
 		return new Promise(async (resolve, _reject) => {
 			await Promise.allSettled(toast.getAnimations().map((animation) => animation.finished));
 			toasterEl.removeChild(toast);

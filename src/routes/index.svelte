@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
 	import Form from '$lib/components/Form.svelte';
+	import ScrollToTop from '$lib/components/ScrollToTop.svelte';
 	import { buildThresholdList, observeIntersection } from '$lib/utils/intersectionObserver';
 	import { prefersReducedMotion } from '$lib/utils/mediaQueries';
 	import { menuButtonRefStore } from '$lib/stores/menuStore';
@@ -59,39 +59,30 @@
 	}
 
 	// Move focus to menu button when using scroll up button
-	let menuButtonRef: HTMLButtonElement | null;
+	let menuButtonEl: HTMLButtonElement | null;
 	menuButtonRefStore.subscribe((value) => {
-		menuButtonRef = value;
+		menuButtonEl = value;
 	});
 
-	function scrollToTop(): void {
-		if (mainEl === null || menuButtonRef === null) return;
-
-		mainEl.scrollTo(0, 0);
-		menuButtonRef.focus();
-	}
-
-	// weird hack for onload events not firing reliably. not sure if it's a SvelteKit bug
+	// weird hack for onload events not firing reliably. not sure if it's a Svelte bug
 	$: if (imageWrapperEl) {
-		const imgEl = imageWrapperEl.children[0].children[2] as HTMLImageElement;
+		const imgEl = imageWrapperEl.children[2] as HTMLImageElement;
 		imgEl.classList.add('img-loaded');
 	}
 </script>
 
 <div class="wrapper">
-	<div bind:this={imageWrapperEl} class="image-wrapper">
-		<picture>
-			<source
-				srcset="image/sam-vargas-480.webp 400w, image/sam-vargas-900.webp 800w, image/sam-vargas-1200.webp 1067w"
-				type="image/webp"
-			/>
-			<source
-				srcset="image/sam-vargas-480.png 400w, image/sam-vargas-900.png 800w, image/sam-vargas-1200.png 1067w"
-				type="image/png"
-			/>
-			<img src="image/sam-vargas-900.png" alt="Sam Vargas" />
-		</picture>
-	</div>
+	<picture bind:this={imageWrapperEl} class="image-wrapper">
+		<source
+			srcset="image/sam-vargas-480.webp 400w, image/sam-vargas-900.webp 800w, image/sam-vargas-1200.webp 1067w"
+			type="image/webp"
+		/>
+		<source
+			srcset="image/sam-vargas-480.png 400w, image/sam-vargas-900.png 800w, image/sam-vargas-1200.png 1067w"
+			type="image/png"
+		/>
+		<img src="image/sam-vargas-900.png" alt="Sam Vargas" />
+	</picture>
 
 	<main bind:this={mainEl} class="wrapper-content" dir="ltr">
 		<section bind:this={observedEl} id="home">
@@ -135,9 +126,7 @@
 		</section>
 	</main>
 
-	{#if showScrollToTop}
-		<button class="scroll-to-top" on:click={scrollToTop} transition:fade>Back to top </button>
-	{/if}
+	<ScrollToTop {showScrollToTop} targetEl={mainEl} focusEl={menuButtonEl} />
 </div>
 
 <style lang="postcss">
@@ -242,53 +231,6 @@
 		}
 	}
 
-	.scroll-to-top {
-		position: relative;
-		width: max-content;
-		height: 2em;
-		position: fixed;
-		z-index: 1;
-		background-color: var(--color-white-alpha);
-		border: none;
-		border-bottom: 0.25em solid var(--color-gray);
-		transition: all 300ms ease;
-
-		@media (prefers-color-scheme: dark) {
-			background-color: unset;
-			border-bottom: 0.25em solid var(--color-white-alpha);
-		}
-	}
-
-	.scroll-to-top:focus {
-		outline: none;
-		border-radius: 0.125em;
-	}
-
-	.scroll-to-top::after {
-		content: '\2191'; /* unicode up arrow */
-		font-size: 2em;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: -1em;
-		right: 0;
-		left: 0;
-		opacity: 0;
-		transform: translateY(100%);
-		transition: all 150ms ease-in-out;
-		color: var(--color-gray);
-
-		@media (prefers-color-scheme: dark) {
-			color: var(--color-white);
-		}
-	}
-
-	.scroll-to-top:focus::after,
-	.scroll-to-top:hover::after {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
 	.wrapper-content {
 		position: fixed;
 		width: 100%;
@@ -372,11 +314,6 @@
 			background: linear-gradient(var(--color-orange) 0.5vw, var(--color-background) 0.5vw);
 		}
 
-		.scroll-to-top {
-			bottom: 5em;
-			right: 2em;
-		}
-
 		.headline {
 			grid-column: 3 / 7;
 			grid-row: 4;
@@ -386,13 +323,6 @@
 		.contact h2 {
 			margin-block-start: 0;
 			margin-block-end: 0.2em;
-		}
-	}
-
-	/* Mobile - android onscreen keyboard fix */
-	@media (width <= 64rem) and (height < 25rem) {
-		.scroll-to-top {
-			display: none;
 		}
 	}
 
@@ -412,20 +342,13 @@
 	}
 
 	/* Desktop */
-	@media (64rem < width <= 86rem) {
+	@media (width > 64rem) {
 		.wrapper {
 			background: linear-gradient(
 				to right,
 				var(--color-orange) 0.5vw,
 				var(--color-background) 0.5vw
 			);
-		}
-
-		.scroll-to-top {
-			bottom: 2em;
-			left: 0;
-			right: 0;
-			margin-inline: auto;
 		}
 
 		.headline {

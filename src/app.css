@@ -2,7 +2,8 @@
 	--font-sans: 'IBM Plex Sans', Verdana, Geneva, Tahoma, sans-serif;
 	--font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', Times, serif;
 	/* Thanks goes to https://www.fluid-type-scale.com/ */
-	--font-size-base: clamp(0.9rem, 0.3vw + 0.8rem, 1.19rem);
+	--font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+	--font-size-base: clamp(0.85rem, 0.3vw + 0.8rem, 1.19rem);
 	--font-size-lg: clamp(1.5rem, 0.9vw + 1.3rem, 2.11rem);
 	--font-size-xl: clamp(1.95rem, 1.49vw + 1.62rem, 2.81rem);
 
