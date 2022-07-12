@@ -1,15 +1,33 @@
 <script lang="ts">
 	import { supportsCssProperty } from '$lib/utils/supports';
+	import type { ThemeType } from '$lib/types/theme.types';
+	import { onMount } from 'svelte';
 
 	export let isOpen: boolean;
 
 	let themeButtonWrapperEl: HTMLDivElement | null;
+	let darkThemeButton: HTMLButtonElement | null = null;
+	let lightThemeButton: HTMLButtonElement | null = null;
 
-	type ThemeType = 'light' | 'dark' | undefined;
-	function handleToggleTheme(theme: ThemeType): void {
-		if (!theme) return;
-		document.querySelector('html')?.setAttribute('data-theme', theme);
-		localStorage.setItem('theme', theme);
+	let theme: ThemeType;
+	onMount(() => {
+		theme = document?.querySelector('html')?.getAttribute('data-theme') as ThemeType;
+	});
+
+	function handleToggleTheme(themeToSet: ThemeType): void {
+		if (!themeToSet) return;
+		theme = themeToSet;
+
+		if (themeToSet === 'light' && darkThemeButton) {
+			darkThemeButton.focus();
+		}
+
+		if (themeToSet === 'light' && lightThemeButton) {
+			lightThemeButton.focus();
+		}
+
+		document.querySelector('html')?.setAttribute('data-theme', themeToSet);
+		localStorage.setItem('theme', themeToSet);
 	}
 
 	// getting around the mobile height problem
@@ -27,8 +45,13 @@
 	}
 </script>
 
-<div bind:this={themeButtonWrapperEl} class="theme-button">
-	<button on:click={() => handleToggleTheme('dark')} class="dark dark-bg">
+<div bind:this={themeButtonWrapperEl} class="theme-button" aria-hidden={isOpen ? false : true}>
+	<button
+		bind:this={darkThemeButton}
+		on:click={() => handleToggleTheme('dark')}
+		class="dark dark-bg"
+		tabindex={isOpen && theme === 'light' ? 0 : -1}
+	>
 		<span class="sr-only">Change to dark theme</span>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
 			><path fill="none" d="M0 0h24v24H0z" /><path
@@ -36,7 +59,12 @@
 			/></svg
 		>
 	</button>
-	<button on:click={() => handleToggleTheme('light')} class="light light-bg">
+	<button
+		bind:this={lightThemeButton}
+		on:click={() => handleToggleTheme('light')}
+		class="light light-bg"
+		tabindex={isOpen && theme === 'dark' ? 0 : -1}
+	>
 		<span class="sr-only">Change to light theme</span>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em">
 			<path fill="none" d="M0 0h24v24H0z" /><path

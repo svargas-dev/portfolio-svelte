@@ -31,13 +31,13 @@
 		{/if}
 	</div>
 
-	<div class={menuClass} aria-hidden>
+	<div class={menuClass} aria-hidden={true}>
 		<div class="menu-atom menu-dot menu-dot-1" />
 		<div class="menu-atom menu-dot menu-dot-2" />
 		<div class="menu-atom menu-dot menu-dot-3" />
 		<div class="menu-atom menu-dot menu-dot-4" />
 	</div>
-	<div class={closeClass} aria-hidden>
+	<div class={closeClass} aria-hidden={true}>
 		<div />
 		<div />
 	</div>
@@ -123,11 +123,6 @@
 		left: 0;
 		margin: auto auto;
 		will-change: transform;
-		transition: transform 100ms;
-
-		@media (prefers-reduced-motion: no-preference) {
-			transition: transform ease-in 200ms;
-		}
 	}
 
 	.v-hidden {
@@ -151,19 +146,24 @@
 	}
 
 	.menu-button:hover .menu-dot {
-		transform: translate(0, 0);
+		@media (pointer: fine) {
+			transform: translate(0, 0);
+		}
 	}
 
+	.menu-atom,
+	.close-icon div {
+		transition: transform 80ms;
+
+		@media (prefers-reduced-motion: no-preference) {
+			transition: transform ease-in 150ms;
+		}
+	}
 	.close-icon div {
 		width: 2em;
 		height: 0.5em;
 		position: absolute;
 		background-color: var(--color-green);
-		transition: transform 100ms;
-
-		@media (prefers-reduced-motion: no-preference) {
-			transition: transform ease-in 200ms;
-		}
 	}
 
 	.close-icon div:nth-child(odd) {
@@ -175,7 +175,9 @@
 	}
 
 	.menu-button:hover .close-icon div {
-		transform: scaleX(0.25);
-		border-radius: 100%;
+		@media (pointer: fine) {
+			transform: scaleX(0.25);
+			border-radius: 100%;
+		}
 	}
 </style>

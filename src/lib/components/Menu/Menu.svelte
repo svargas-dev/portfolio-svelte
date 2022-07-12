@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import type { ThemeType } from '$lib/types/theme.types';
+
 	import MenuButton from './MenuButton.svelte';
-	import { trapFocus } from '$lib/utils/trapFocus';
 	import ThemeButton from './ThemeButton.svelte';
+	import { trapFocus } from '$lib/utils/trapFocus';
 
 	export let isOpen = false;
 	export let toggleOpen: () => void;
@@ -15,31 +18,40 @@
 
 	let trapFocusCleanup: (() => void) | undefined;
 	$: {
-		if (navWrapperEl && isOpen) trapFocusCleanup = trapFocus(navWrapperEl);
-		if (!isOpen && trapFocusCleanup) trapFocusCleanup();
+		if (trapFocusCleanup && !isOpen) trapFocusCleanup();
+		if (navWrapperEl && isOpen) {
+			trapFocusCleanup = trapFocus(navWrapperEl, toggleOpen);
+		}
 	}
 
 	$: asideClass = isOpen ? 'aside--open' : '';
 </script>
 
-<MenuButton {isOpen} {toggleOpen} />
+<div bind:this={navWrapperEl}>
+	<MenuButton {isOpen} {toggleOpen} />
 
-<aside
-	bind:this={navWrapperEl}
-	class={asideClass}
-	on:click={toggleOpen}
-	on:keydown={isOpen ? handleKeydown : undefined}
-	aria-hidden={!isOpen}
->
-	<nav on:click|stopPropagation>
-		<a on:click={toggleOpen} href="#about" tabindex={isOpen ? 0 : -1}>About</a>
-		<a on:click={toggleOpen} href="#contact" tabindex={isOpen ? 0 : -1}> Contact</a>
-
-		<ThemeButton {isOpen} />
-	</nav>
-</aside>
+	<aside
+		class={asideClass}
+		on:click={toggleOpen}
+		on:keydown={isOpen ? handleKeydown : undefined}
+		aria-hidden={!isOpen}
+	>
+		<div on:click|stopPropagation>
+			<nav>
+				<a on:click={toggleOpen} href="#about" tabindex={isOpen ? 0 : -1}>About</a>
+				<a on:click={toggleOpen} href="#contact" tabindex={isOpen ? 0 : -1}> Contact</a>
+			</nav>
+			<ThemeButton {isOpen} />
+		</div>
+	</aside>
+</div>
 
 <style lang="postcss">
+	div {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 	aside {
 		position: absolute;
 		z-index: 1;
@@ -85,7 +97,7 @@
 	nav {
 		position: relative;
 		width: clamp(15em, 20vw, 360px);
-		height: 100%;
+		height: 100vh;
 		max-height: -webkit-fill-available;
 		background-color: var(--color-black);
 		display: flex;

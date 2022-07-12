@@ -1,6 +1,5 @@
 /**
- * A stateless keyboard utility to -
- * - Trap focus for A11y
+ * A stateless keyboard utility to trap focus for a11y
  *
  * Quick modernization of
  * https://hiddedevries.nl/en/blog/2017-01-29-using-javascript-to-trap-focus-in-an-element
@@ -10,32 +9,48 @@
  * the focused element before opening e.g. for use with a modal
  * then restore when closing
  */
-export function trapFocus(element: HTMLElement): (() => void) | undefined {
+export function trapFocus(element: HTMLElement, close?: () => void): (() => void) | undefined {
 	if (typeof document === 'undefined') return undefined;
 
 	const focusableEls = element.querySelectorAll(
 		'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
 	);
-	const firstFocusableEl = focusableEls[0] as FocusableElement;
-	const lastFocusableEl = focusableEls[focusableEls.length - 1] as FocusableElement;
+	const focusableList: HTMLElement[] = [];
+	focusableEls.forEach((element) => focusableList.push(element as HTMLElement));
 
 	function loopFocus(e: KeyboardEvent) {
-		const isTabPressed = e.key === 'Tab';
+		if (!document.activeElement) return;
 
-		if (!isTabPressed) {
+		if (e.key === 'Escape' && close) {
+			close();
 			return;
 		}
 
-		if (e.shiftKey) {
-			/* shift + tab */ if (document.activeElement === firstFocusableEl) {
-				lastFocusableEl.focus();
-				e.preventDefault();
+		const index = focusableList.indexOf(document.activeElement as HTMLElement);
+		let nextIndex = 0;
+
+		const getNextIndexBack = (index: number): number =>
+			index > 0 ? index - 1 : focusableList.length - 1;
+		const getNextIndexForward = (index: number): number =>
+			index + 1 < focusableList.length ? index + 1 : 0;
+
+		if ((e.key === 'Tab' && e.shiftKey) || e.key === 'ArrowUp') {
+			e.preventDefault();
+			const nextIndex = getNextIndexBack(index);
+			if (focusableList[nextIndex].tabIndex < 0) {
+				focusableList[getNextIndexBack(nextIndex)].focus();
+				return;
 			}
-		} /* tab */ else {
-			if (document.activeElement === lastFocusableEl) {
-				firstFocusableEl.focus();
-				e.preventDefault();
+
+			focusableList[nextIndex].focus();
+		} else if (e.key === 'Tab' || e.key === 'ArrowDown') {
+			e.preventDefault();
+			nextIndex = getNextIndexForward(index);
+			if (focusableList[nextIndex].tabIndex < 0) {
+				focusableList[getNextIndexForward(nextIndex)].focus();
+				return;
 			}
+			focusableList[nextIndex].focus();
 		}
 	}
 
@@ -45,5 +60,3 @@ export function trapFocus(element: HTMLElement): (() => void) | undefined {
 		element.removeEventListener('keydown', loopFocus);
 	};
 }
-
-type FocusableElement = Element & { focus: () => void };

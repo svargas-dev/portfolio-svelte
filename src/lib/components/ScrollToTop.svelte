@@ -5,10 +5,6 @@
 	export let targetEl: HTMLElement | null;
 	export let focusEl: HTMLButtonElement | null;
 
-	$: {
-		console.log(showScrollToTop, { targetEl, focusEl });
-	}
-
 	function scrollToTop(): void {
 		if (!targetEl) return;
 

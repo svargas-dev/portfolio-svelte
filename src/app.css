@@ -172,7 +172,7 @@ button:focus {
 	color: var(--color-gray) !important;
 }
 
-[data-theme='light'] nav .light {
+[data-theme='light'] aside .light {
 	visibility: hidden;
 	opacity: 0;
 }
@@ -209,7 +209,7 @@ button:focus {
 	background-color: black !important;
 }
 
-[data-theme='dark'] nav .dark {
+[data-theme='dark'] aside .dark {
 	visibility: hidden;
 	opacity: 0;
 }
