@@ -1,4 +1,6 @@
 <script lang="ts">
+	export const prerender = true;
+
 	import Menu from '$lib/components/Menu/Menu.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Toast from '$lib/components/Toast/Toast.svelte';
