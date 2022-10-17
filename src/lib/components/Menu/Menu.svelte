@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { ThemeType } from '$lib/types/theme.types';
-
 	import MenuButton from './MenuButton.svelte';
 	import ThemeButton from './ThemeButton.svelte';
 	import { trapFocus } from '$lib/utils/trapFocus';

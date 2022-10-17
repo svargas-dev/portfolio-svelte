@@ -7,7 +7,7 @@
 		Initial = '',
 		Sending = 'Sending ...',
 		Sent = 'Form sent',
-		Error = 'There was an error sending the form. Please try again'
+		Error = 'There was an error sending the form. Please try again',
 	}
 	let result = FormStatus.Initial;
 
@@ -31,7 +31,7 @@
 		fetch('/', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			body: encode({ 'form-name': event.target.name, ...formData })
+			body: encode({ 'form-name': event.target.name, ...formData }),
 		})
 			.then(() => (result = FormStatus.Sent))
 			.catch(() => (result = FormStatus.Error));
@@ -75,7 +75,6 @@
 	form {
 		display: flex;
 		flex-direction: column;
-		/* background: purple; */
 		padding-block-end: 6em;
 	}
 
