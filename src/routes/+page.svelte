@@ -6,8 +6,6 @@
 	import { prefersReducedMotion } from '$lib/utils/mediaQueries';
 	import { menuButtonRefStore } from '$lib/stores/menuStore';
 
-	export const prerender = true;
-
 	let mainEl: HTMLElement | null = null;
 	let observedEl: HTMLElement | null = null;
 	let imageWrapperEl: HTMLElement | null = null;
@@ -17,7 +15,7 @@
 		const options = {
 			root: null,
 			rootMargin: '0px',
-			threshold: buildThresholdList(32)
+			threshold: buildThresholdList(32),
 		};
 		if (observedEl && imageWrapperEl)
 			observeIntersection(observedEl, effectsOnIntersectionEvent(imageWrapperEl), options);

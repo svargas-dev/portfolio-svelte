@@ -57,7 +57,7 @@
 			[{ transform: `translateY(${invert}px)` }, { transform: 'translateY(0)' }],
 			{
 				duration: 150,
-				easing: 'ease-out'
+				easing: 'ease-out',
 			}
 		);
 

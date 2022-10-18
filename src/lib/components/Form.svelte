@@ -1,6 +1,33 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+	import { PUBLIC_HCAPTCHA_SITE_KEY } from '$env/static/public';
+
 	import { encode } from '$lib/utils/encode';
 	import { toastStore } from '$lib/stores/toastStore';
+	import { verifyHCaptcha } from '$lib/utils/hCaptcha';
+
+	let hcaptcha: HCaptcha | null = null;
+	let hcaptchaWidgetID: HCaptchaId;
+
+	onMount(() => {
+		if (typeof window !== 'undefined') {
+			hcaptcha = window.hcaptcha;
+			if (hcaptcha.render) {
+				hcaptchaWidgetID = hcaptcha.render('h-captcha-id', {
+					sitekey: PUBLIC_HCAPTCHA_SITE_KEY,
+					size: 'invisible',
+					theme: 'dark',
+				});
+			}
+		}
+	});
+
+	onDestroy(() => {
+		if (typeof window !== 'undefined') {
+			hcaptcha?.remove(hcaptchaWidgetID);
+			hcaptcha = null;
+		}
+	});
 
 	let formData = {};
 	enum FormStatus {
@@ -26,7 +53,11 @@
 	 * Submit netlify form
 	 * Svelte still doesn't give us types for these
 	 */
-	function handleSubmit(event: any): void {
+	async function handleSubmit(event: any): Promise<void> {
+		const { error, success } = await verifyHCaptcha(hcaptchaWidgetID);
+		if (error) result = FormStatus.Error;
+		if (!success) return;
+
 		result = FormStatus.Sending;
 		fetch('/', {
 			method: 'POST',
@@ -37,6 +68,11 @@
 			.catch(() => (result = FormStatus.Error));
 	}
 </script>
+
+<svelte:head>
+	<!-- At a later date could load when component is in view -->
+	<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+</svelte:head>
 
 <form
 	name="contact"
@@ -66,6 +102,12 @@
 		/>
 	</label>
 
+	<div
+		id="h-captcha-id"
+		class="h-captcha"
+		data-sitekey={PUBLIC_HCAPTCHA_SITE_KEY}
+		data-size="invisible"
+	/>
 	<button type="submit" disabled={result === FormStatus.Sending || result === FormStatus.Sent}>
 		Send
 	</button>

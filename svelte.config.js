@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-netlify';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,14 +8,7 @@ const config = {
 	preprocess: preprocess({ postcss: true }),
 
 	kit: {
-		adapter: adapter({
-			// default options are shown. On some platforms
-			// these options are set automatically
-			// pages: 'build',
-			// assets: 'build',
-			// fallback: undefined,
-			// precompress: false
-		}),
+		adapter: adapter(),
 	},
 };
 
