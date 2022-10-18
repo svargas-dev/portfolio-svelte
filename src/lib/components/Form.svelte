@@ -29,7 +29,14 @@
 		}
 	});
 
-	let formData = {};
+	type FormData = {
+		'bot-field'?: string;
+		name?: string;
+		email?: string;
+		message?: string;
+	};
+
+	let formData: FormData = {};
 	enum FormStatus {
 		Initial = '',
 		Sending = 'Sending ...',
@@ -54,6 +61,9 @@
 	 * Svelte still doesn't give us types for these
 	 */
 	async function handleSubmit(event: any): Promise<void> {
+		// reject bots
+		if (formData['bot-field']) return;
+
 		const { error, success } = await verifyHCaptcha(hcaptchaWidgetID);
 		if (error) result = FormStatus.Error;
 		if (!success) return;
@@ -74,27 +84,26 @@
 	<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </svelte:head>
 
-<form
-	name="contact"
-	data-netlify="true"
-	netlify-honeypot="bot-field"
-	on:submit|preventDefault={handleSubmit}
->
-	<!-- Could add validation on blur in the future -->
-	<input type="hidden" name="form-name" value="contact" />
-	<label for="contact-name">
+<form name="contact-form" data-netlify="true" on:submit|preventDefault={handleSubmit}>
+	<input type="hidden" name="form-name" value="contact-form" />
+	<label class="sr-only" aria-hidden>
+		Do not fill this out if you are a person:
+		<input name="bot-field" on:change={handleChange} />
+	</label>
+
+	<label for="name">
 		<span>Name</span>
-		<input id="contact-name" name="contact-name" type="text" required on:change={handleChange} />
+		<input id="name" name="name" type="text" required on:change={handleChange} />
 	</label>
-	<label for="contact-email">
+	<label for="email">
 		<span>Email</span>
-		<input id="contact-email" name="contact-email" type="email" required on:change={handleChange} />
+		<input id="email" name="email" type="email" required on:change={handleChange} />
 	</label>
-	<label for="contact-message">
+	<label for="message">
 		<span>Message</span>
 		<textarea
-			id="contact-message"
-			name="contact-message"
+			id="message"
+			name="message"
 			rows="4"
 			maxlength="512"
 			required
