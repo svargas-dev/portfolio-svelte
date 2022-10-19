@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { PUBLIC_HCAPTCHA_SITE_KEY } from '$env/static/public';
+	import { PUBLIC_HCAPTCHA_SITE_KEY, PUBLIC_KEY } from '$env/static/public';
 
-	import { encode } from '$lib/utils/encode';
 	import { toastStore } from '$lib/stores/toastStore';
 	import { verifyHCaptcha } from '$lib/utils/hCaptcha';
+	import { functionsBaseUrl } from '$lib/utils/functionsBaseUrl';
 
 	let hcaptcha: HCaptcha | null = null;
 	let hcaptchaWidgetID: HCaptchaId;
@@ -31,6 +31,7 @@
 
 	type FormData = {
 		'bot-field'?: string;
+		'other-field'?: string;
 		name?: string;
 		email?: string;
 		message?: string;
@@ -62,17 +63,18 @@
 	 */
 	async function handleSubmit(event: any): Promise<void> {
 		// reject bots
-		if (formData['bot-field']) return;
+		if (formData['bot-field'] || formData['other-field']) return;
 
 		const { error, success } = await verifyHCaptcha(hcaptchaWidgetID);
+		console.log({ error, success });
 		if (error) result = FormStatus.Error;
 		if (!success) return;
 
 		result = FormStatus.Sending;
-		fetch('/', {
+		fetch(`${functionsBaseUrl}/send`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			body: encode({ 'form-name': event.target.name, ...formData }),
+			headers: { 'Content-Type': 'application/json', Authorization: PUBLIC_KEY },
+			body: JSON.stringify(formData),
 		})
 			.then(() => (result = FormStatus.Sent))
 			.catch(() => (result = FormStatus.Error));
@@ -84,13 +86,15 @@
 	<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </svelte:head>
 
-<form name="contact-form" data-netlify="true" on:submit|preventDefault={handleSubmit}>
-	<input type="hidden" name="form-name" value="contact-form" />
+<form name="contact" on:submit|preventDefault={handleSubmit}>
 	<label class="sr-only" aria-hidden>
 		Do not fill this out if you are a person:
 		<input name="bot-field" on:change={handleChange} />
 	</label>
-
+	<label class="sr-only" aria-hidden>
+		Leave this if you're human:
+		<input name="other-field" on:change={handleChange} />
+	</label>
 	<label for="name">
 		<span>Name</span>
 		<input id="name" name="name" type="text" required on:change={handleChange} />

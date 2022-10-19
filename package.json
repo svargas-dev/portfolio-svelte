@@ -22,6 +22,7 @@
 		"@sveltejs/adapter-netlify": "1.0.0-next.81",
 		"@sveltejs/kit": "next",
 		"@types/node": "^18.11.0",
+		"@types/nodemailer": "^6.4.6",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.7",
@@ -48,6 +49,7 @@
 		"@fontsource/ibm-plex-sans": "^4.5.13",
 		"@fontsource/ibm-plex-serif": "^4.5.12",
 		"node-fetch": "^3.2.10",
+		"nodemailer": "^6.8.0",
 		"normalize.css": "^8.0.1"
 	}
 }

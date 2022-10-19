@@ -1,3 +1,5 @@
+import { functionsBaseUrl } from '$lib/utils/functionsBaseUrl';
+
 type VerifyHCapture = {
 	success: boolean;
 	error: boolean;
@@ -13,19 +15,16 @@ export async function verifyHCaptcha(hcaptchaWidgetID: string): Promise<VerifyHC
 			const { response: hCaptchaResponse } = res;
 
 			// Verify the token with a serverless function
-			const verifyResponse = await fetch(
-				import.meta.env.DEV ? '/.netlify/functions' : '/api/verify',
-				{
-					method: 'POST',
-					credentials: 'omit',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						token: hCaptchaResponse,
-					}),
-				}
-			);
+			const verifyResponse = await fetch(`${functionsBaseUrl}/verify`, {
+				method: 'POST',
+				credentials: 'omit',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					token: hCaptchaResponse,
+				}),
+			});
 			const data = await verifyResponse.json();
 			return {
 				success: data.success,
