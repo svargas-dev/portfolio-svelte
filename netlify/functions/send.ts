@@ -3,6 +3,10 @@ import nodemailer from 'nodemailer';
 
 const handler: Handler = async function (event, _context) {
 	async function main(): Promise<number> {
+		if (event.httpMethod !== 'POST') {
+			return 404;
+		}
+
 		if (
 			typeof event.headers['authorization'] === 'undefined' ||
 			event.headers['authorization'] !== process.env.PUBLIC_KEY
@@ -10,7 +14,7 @@ const handler: Handler = async function (event, _context) {
 			return 401;
 		}
 
-		if (event.httpMethod !== 'POST' || !event.body) {
+		if (!event.body) {
 			return 400;
 		}
 

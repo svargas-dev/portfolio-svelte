@@ -2,13 +2,18 @@ import { Handler } from '@netlify/functions';
 import fetch from 'node-fetch';
 
 const handler: Handler = async function (event, _context) {
-	const body = event.body ? JSON.parse(event.body) : null;
-	const { token } = body;
+	if (event.httpMethod !== 'POST') {
+		return {
+			statusCode: 404,
+		};
+	}
 
-	if (!token) return { statusCode: 400, body: 'Missing token' };
+	const body = event.body ? JSON.parse(event.body) : null;
+
+	if (!body.token) return { statusCode: 400 };
 
 	if (!process.env.HCAPTCHA_API_URL || !process.env.HCAPTCHA_SECRET_KEY) {
-		return { statusCode: 500, body: 'Missing hCaptcha API URL or secret' };
+		return { statusCode: 500 };
 	}
 
 	const response = await fetch(process.env.HCAPTCHA_API_URL, {
@@ -18,7 +23,7 @@ const handler: Handler = async function (event, _context) {
 		},
 		body: new URLSearchParams({
 			secret: process.env.HCAPTCHA_SECRET_KEY,
-			response: token,
+			response: body.token,
 		}),
 	});
 
