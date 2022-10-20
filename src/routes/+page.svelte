@@ -86,7 +86,14 @@
 		<section bind:this={observedEl} id="home">
 			<div class="headline">
 				<h1>Sam Vargas</h1>
-				<h2>Full-stack Engineer</h2>
+				<h2>
+					Full-stack Engineer
+					<!-- For SEO -->
+					<span class="sr-only" aria-hidden="true">
+						, Full-stack, Front-End, React, React Native, Svelte, Web Developer, Accessibility,
+						Python, Django, Django REST Framework, Go, Golang, Node, Express, Rest APIs, TypeScript
+					</span>
+				</h2>
 			</div>
 		</section>
 
@@ -94,16 +101,16 @@
 			<article class="about">
 				<h2>About</h2>
 				<p>
-					I am a maker and creative problem solver dedicated to creating impactful, performant and
-					accessible solutions using the best tools for the job.
+					I am a maker and creative problem solver dedicated to creating impactful, accessible and
+					performant solutions using the best tools for the job.
 				</p>
 				<p>
-					After nearly a decade working at sea as an officer on board merchant ships, specialising
-					in polar oceanographic research, I began a new journey into web development and software
-					engineering. From books, courses and friends, I dived into the depths and in 2019
-					graduated from Ironhack Lisbon &mdash; a top-rated bootcamp focused on today's tech and
-					best practices. Fast forward to today, I have skyrocketed start-ups’ Core Web Vitals, SEO
-					and a11y.
+					After nearly a decade working at sea as an officer on board British merchant ships,
+					specialising in polar oceanographic research, I began a new journey into web development
+					and software engineering. From books, courses and friends, I dived into the depths and in
+					2019 graduated from Ironhack Lisbon &mdash; a top-rated bootcamp focused on today's tech
+					and best practices. Fast forward to today, I have skyrocketed start-ups' Core Web Vitals,
+					SEO and a11y.
 				</p>
 				<p>
 					Interested? Drop me a line in the form below or check out the <a

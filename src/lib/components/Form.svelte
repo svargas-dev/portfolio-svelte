@@ -6,8 +6,9 @@
 	import { verifyHCaptcha } from '$lib/utils/hCaptcha';
 	import { functionsBaseUrl } from '$lib/utils/functionsBaseUrl';
 
-	let hcaptcha: HCaptcha | null = null;
-	let hcaptchaWidgetID: HCaptchaId;
+	// @TODO Eslint doesn't pick up global @types/hcaptcha
+	let hcaptcha: HCaptcha | null = null; // eslint-disable-line no-undef
+	let hcaptchaWidgetID: HCaptchaId; // eslint-disable-line no-undef
 
 	onMount(() => {
 		if (typeof window !== 'undefined') {
@@ -30,8 +31,8 @@
 	});
 
 	type FormData = {
-		'bot-field'?: string;
-		'other-field'?: string;
+		'bot-field'?: string; // honeypot
+		'other-field'?: string; // honeypot
 		name?: string;
 		email?: string;
 		message?: string;
@@ -61,7 +62,7 @@
 	 * Submit netlify form
 	 * Svelte still doesn't give us types for these
 	 */
-	async function handleSubmit(event: any): Promise<void> {
+	async function handleSubmit(): Promise<void> {
 		// reject bots
 		if (formData['bot-field'] || formData['other-field']) return;
 
@@ -95,6 +96,7 @@
 		Leave this if you're human:
 		<input name="other-field" on:change={handleChange} />
 	</label>
+
 	<label for="name">
 		<span>Name</span>
 		<input id="name" name="name" type="text" required on:change={handleChange} />
