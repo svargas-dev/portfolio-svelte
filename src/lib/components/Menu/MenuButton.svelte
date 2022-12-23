@@ -126,7 +126,7 @@
 	}
 
 	.v-hidden {
-		content-visibility: hidden;
+		visibility: hidden;
 	}
 
 	.menu-dot-1 {
