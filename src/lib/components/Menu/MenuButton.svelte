@@ -13,7 +13,9 @@
 		if (menuButtonRef) menuButtonRefStore.set(menuButtonRef);
 	}
 
-	$: buttonClass = isOpen ? 'menu-button menu-button--open' : 'menu-button';
+	$: buttonClass = isOpen
+		? 'umami--click--menu menu-button menu-button--open'
+		: 'umami--click--menu menu-button';
 	$: buttonTextClass = isOpen ? 'menu-button__text menu-button__text--open' : 'menu-button__text';
 
 	$: menuClass = isOpen ? 'v-hidden' : 'menu-icon';

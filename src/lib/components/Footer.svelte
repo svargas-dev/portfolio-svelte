@@ -1,5 +1,10 @@
 <footer>
-	<a class="link" href="https://mas.to/@svargas" target="_blank" rel="me noopener noreferrer">
+	<a
+		class="link umami--click--link-mastodon"
+		href="https://mas.to/@svargas"
+		target="_blank"
+		rel="me noopener noreferrer"
+	>
 		<span class="sr-only">Mastodon</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +21,12 @@
 		</svg>
 	</a>
 	<!-- Remix icons -->
-	<a class="link" href="https://github.com/svargas-dev" target="_blank" rel="noopener noreferrer">
+	<a
+		class="link umami--click--link-github"
+		href="https://github.com/svargas-dev"
+		target="_blank"
+		rel="noopener noreferrer"
+	>
 		<span class="sr-only">Github</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +43,12 @@
 		</svg>
 	</a>
 
-	<a class="link" href="https://gitlab.com/svargas-dev" target="_blank" rel="noopener noreferrer">
+	<a
+		class="link  umami--click--link-gitlab"
+		href="https://gitlab.com/svargas-dev"
+		target="_blank"
+		rel="noopener noreferrer"
+	>
 		<span class="sr-only">Gitlab</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +66,7 @@
 	</a>
 
 	<a
-		class="link"
+		class="link  umami--click--link-linkedin"
 		href="https://www.linkedin.com/in/sam-vargas"
 		target="_blank"
 		rel="noopener noreferrer"

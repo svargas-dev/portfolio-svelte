@@ -49,7 +49,7 @@
 	<button
 		bind:this={darkThemeButton}
 		on:click={() => handleToggleTheme('dark')}
-		class="dark dark-bg"
+		class="umami--click--toggle-theme dark dark-bg"
 		tabindex={isOpen && theme === 'light' ? 0 : -1}
 	>
 		<span class="sr-only">Change to dark theme</span>
@@ -62,7 +62,7 @@
 	<button
 		bind:this={lightThemeButton}
 		on:click={() => handleToggleTheme('light')}
-		class="light light-bg"
+		class="umami--click--toggle-theme light light-bg"
 		tabindex={isOpen && theme === 'dark' ? 0 : -1}
 	>
 		<span class="sr-only">Change to light theme</span>
