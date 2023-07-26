@@ -44,7 +44,7 @@
 	</a>
 
 	<a
-		class="link  umami--click--link-gitlab"
+		class="link umami--click--link-gitlab"
 		href="https://gitlab.com/svargas-dev"
 		target="_blank"
 		rel="noopener noreferrer"
@@ -66,7 +66,7 @@
 	</a>
 
 	<a
-		class="link  umami--click--link-linkedin"
+		class="link umami--click--link-linkedin"
 		href="https://www.linkedin.com/in/sam-vargas"
 		target="_blank"
 		rel="noopener noreferrer"

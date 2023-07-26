@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { PUBLIC_HCAPTCHA_SITE_KEY, PUBLIC_KEY } from '$env/static/public';
 
+	import IntersectionWrapper from './IntersectionWrapper.svelte';
 	import { toastStore } from '$lib/stores/toastStore';
 	import { verifyHCaptcha } from '$lib/utils/hCaptcha';
 	import { functionsBaseUrl } from '$lib/utils/functionsBaseUrl';
@@ -10,7 +11,7 @@
 	let hcaptcha: HCaptcha | null = null; // eslint-disable-line no-undef
 	let hcaptchaWidgetID: HCaptchaId; // eslint-disable-line no-undef
 
-	onMount(() => {
+	const loadHCaptcha = () => {
 		if (typeof window !== 'undefined') {
 			hcaptcha = window.hcaptcha;
 			if (hcaptcha.render) {
@@ -21,7 +22,7 @@
 				});
 			}
 		}
-	});
+	};
 
 	onDestroy(() => {
 		if (typeof window !== 'undefined') {
@@ -82,51 +83,48 @@
 	}
 </script>
 
-<svelte:head>
-	<!-- At a later date could load when component is in view -->
-	<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-</svelte:head>
+<IntersectionWrapper src="https://js.hcaptcha.com/1/api.js" load={loadHCaptcha}>
+	<form name="contact" on:submit|preventDefault={handleSubmit}>
+		<label class="sr-only" aria-hidden>
+			Do not fill this out if you are a person:
+			<input name="bot-field" on:change={handleChange} />
+		</label>
+		<label class="sr-only" aria-hidden>
+			Leave this if you're human:
+			<input name="other-field" on:change={handleChange} />
+		</label>
 
-<form name="contact" on:submit|preventDefault={handleSubmit}>
-	<label class="sr-only" aria-hidden>
-		Do not fill this out if you are a person:
-		<input name="bot-field" on:change={handleChange} />
-	</label>
-	<label class="sr-only" aria-hidden>
-		Leave this if you're human:
-		<input name="other-field" on:change={handleChange} />
-	</label>
+		<label for="name">
+			<span>Name</span>
+			<input id="name" name="name" type="text" required on:change={handleChange} />
+		</label>
+		<label for="email">
+			<span>Email</span>
+			<input id="email" name="email" type="email" required on:change={handleChange} />
+		</label>
+		<label for="message">
+			<span>Message</span>
+			<textarea
+				id="message"
+				name="message"
+				rows="4"
+				maxlength="512"
+				required
+				on:change={handleChange}
+			/>
+		</label>
 
-	<label for="name">
-		<span>Name</span>
-		<input id="name" name="name" type="text" required on:change={handleChange} />
-	</label>
-	<label for="email">
-		<span>Email</span>
-		<input id="email" name="email" type="email" required on:change={handleChange} />
-	</label>
-	<label for="message">
-		<span>Message</span>
-		<textarea
-			id="message"
-			name="message"
-			rows="4"
-			maxlength="512"
-			required
-			on:change={handleChange}
+		<div
+			id="h-captcha-id"
+			class="h-captcha"
+			data-sitekey={PUBLIC_HCAPTCHA_SITE_KEY}
+			data-size="invisible"
 		/>
-	</label>
-
-	<div
-		id="h-captcha-id"
-		class="h-captcha"
-		data-sitekey={PUBLIC_HCAPTCHA_SITE_KEY}
-		data-size="invisible"
-	/>
-	<button type="submit" disabled={result === FormStatus.Sending || result === FormStatus.Sent}>
-		Send
-	</button>
-</form>
+		<button type="submit" disabled={result === FormStatus.Sending || result === FormStatus.Sent}>
+			Send
+		</button>
+	</form>
+</IntersectionWrapper>
 
 <style lang="postcss">
 	form {
