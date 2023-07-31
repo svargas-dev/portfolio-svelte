@@ -86,14 +86,7 @@
 		<section bind:this={observedEl} id="home">
 			<div class="headline">
 				<h1>Sam Vargas</h1>
-				<h2>
-					Full-stack Engineer
-					<!-- For SEO -->
-					<span class="sr-only" aria-hidden="true">
-						, Full-stack, Front-End, React, React Native, Svelte, Web Developer, Accessibility,
-						Python, Django, Django REST Framework, Go, Golang, Node, Express, Rest APIs, TypeScript
-					</span>
-				</h2>
+				<h2>Full-Stack Engineer</h2>
 			</div>
 		</section>
 
@@ -121,6 +114,13 @@
 					> for this site.
 				</p>
 			</article>
+
+			<!-- For SEO -->
+			<span class="sr-only" aria-hidden="true">
+				Full Stack, Front End, Frontend, React, React Native, Svelte, Web Developer,
+				Accessibility, a11y, Python, Django, Django REST Framework, Go, Golang, Node, Express, Rest APIs,
+				TypeScript
+			</span>
 		</section>
 
 		<section id="contact">
