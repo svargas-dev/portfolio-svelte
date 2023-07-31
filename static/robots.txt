@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /fonts
 Disallow: /js
 
-Sitemap: https://samvargas.xyz/sitemap.xml
+Sitemap: https://www.samvargas.xyz/sitemap.xml
